@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 ## Project Overview
 
-Olympics Planner is a single-page web app for browsing and planning attendance at the LA 2028 Olympic Games. Users can filter events by sport, venue zone, date range, and medal-round type; optionally highlight Canada's medal contenders; view schedules in list or calendar format; and maintain a personal watchlist (persisted in localStorage). The app is fully responsive for mobile and desktop.
+Olympics Planner is a single-page web app for browsing and planning attendance at the LA 2028 Olympic Games. Users can filter events by sport, venue zone, date range, and medal-round type; optionally highlight Canada's medal contenders with athlete-specific event targeting; view schedules in list or calendar format; maintain a personal watchlist with export/import capabilities; and benefit from mobile-friendly tooltips. The app is fully responsive for mobile and desktop.
 
 ## Tech Stack
 
@@ -41,7 +41,8 @@ src/
 │   │   └── DateRangeFilter.tsx  # Mini calendar for selecting a date range
 │   ├── ListView/        # Chronological event list grouped by date
 │   ├── Tabs/            # List / Calendar / Watchlist tab switcher
-│   └── WatchlistPanel/  # Saved events view
+│   ├── Tooltip/         # Mobile-friendly tooltip component with auto-flip placement
+│   └── WatchlistPanel/  # Saved events view with export/import functionality
 ├── data/
 │   ├── schedule.json        # Full LA 2028 Olympic schedule (~300KB)
 │   └── canadaMedalWatch.ts  # Canada medal-potential profiles by sport (gold/medal/watch tiers)
@@ -65,7 +66,9 @@ src/
 - **Zone grouping** — FilterPanel groups venue zones into "SoCal Venues" and "Other Venues" sections
 - **Medal-only toggle** — `medalOnly` boolean in App state; filters to `sessionType` of `Final` or `Bronze`
 - **Date range filter** — `startDate`/`endDate` strings (`"2028-07-DD"`); `DateRangeFilter` renders a mini calendar with activity-density dots
-- **Canada Medal Watch** — `canadaMedalWatch` boolean filters to sports listed in `src/data/canadaMedalWatch.ts`; sport chips in the filter sidebar show tier emoji (🥇/🥈/🍁) when enabled
+- **Canada Medal Watch** — `canadaMedalWatch` boolean filters to athlete-specific events in `src/data/canadaMedalWatch.ts` (not just by sport); each sport/athlete pairing includes keyword matching for precise event targeting; sport chips in the filter sidebar show tier emoji (🥇/🥈/🍁) when enabled; hovering shows athlete names and event details via mobile-friendly tooltips
+- **Watchlist Export/Import** — watchlist data (JSON) can be exported and imported via WatchlistPanel; enables cross-browser sharing and backup of saved events
+- **Mobile-Friendly Tooltips** — custom tooltip component auto-flips placement when clipped at screen edges; accessible on both hover (desktop) and tap (mobile); used for sport tier indicators and athlete/event details
 - **Responsive layout** — sidebar collapses on mobile; filter panel slides in as a sheet; Tabs component adapts for small screens
 
 ### OlympicEvent Type
