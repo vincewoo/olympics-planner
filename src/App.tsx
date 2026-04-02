@@ -17,6 +17,7 @@ export default function App() {
   const [selectedSports, setSelectedSports] = useState<Set<string>>(new Set())
   const [selectedZones, setSelectedZones] = useState<Set<string>>(new Set())
   const [medalOnly, setMedalOnly] = useState(false)
+  const [canadaMedalWatch, setCanadaMedalWatch] = useState(false)
   const [startDate, setStartDate] = useState<string | null>(null)
   const [endDate, setEndDate] = useState<string | null>(null)
   const [filterOpen, setFilterOpen] = useState(false)
@@ -31,9 +32,9 @@ export default function App() {
     []
   )
 
-  const filteredEvents = useFilteredEvents(allEvents, selectedSports, selectedZones, medalOnly, startDate, endDate)
+  const filteredEvents = useFilteredEvents(allEvents, selectedSports, selectedZones, medalOnly, canadaMedalWatch, startDate, endDate)
 
-  const activeFilterCount = selectedSports.size + selectedZones.size + (medalOnly ? 1 : 0) + (startDate ? 1 : 0)
+  const activeFilterCount = selectedSports.size + selectedZones.size + (medalOnly ? 1 : 0) + (canadaMedalWatch ? 1 : 0) + (startDate ? 1 : 0)
 
   function toggleSport(sport: string) {
     setSelectedSports(prev => {
@@ -77,6 +78,7 @@ export default function App() {
     setSelectedSports(new Set())
     setSelectedZones(new Set())
     setMedalOnly(false)
+    setCanadaMedalWatch(false)
     setStartDate(null)
     setEndDate(null)
   }
@@ -89,11 +91,13 @@ export default function App() {
       selectedSports={selectedSports}
       selectedZones={selectedZones}
       medalOnly={medalOnly}
+      canadaMedalWatch={canadaMedalWatch}
       startDate={startDate}
       endDate={endDate}
       onToggleSport={toggleSport}
       onToggleZone={toggleZone}
       onToggleMedalOnly={() => setMedalOnly(v => !v)}
+      onToggleCanadaMedalWatch={() => setCanadaMedalWatch(v => !v)}
       onSelectDate={selectDate}
       onClearDates={() => { setStartDate(null); setEndDate(null) }}
       onClearAll={clearAll}
