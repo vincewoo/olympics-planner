@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import type { OlympicEvent } from '../../types'
 
 const DAY_LABELS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
+const WEEKEND_COLS = new Set([5, 6]) // Saturday, Sunday (0-indexed)
 
 // Olympics run July 10–30, 2028 — exactly 3 weeks (Mon–Sun)
 const FIRST_DAY = 10
@@ -27,16 +28,20 @@ interface Props {
   allEvents: OlympicEvent[]
   startDate: string | null
   endDate: string | null
+  weekendsOnly: boolean
   onSelectDate: (date: string) => void
   onClear: () => void
+  onToggleWeekendsOnly: () => void
 }
 
 export function DateRangeFilter({
   allEvents,
   startDate,
   endDate,
+  weekendsOnly,
   onSelectDate,
   onClear,
+  onToggleWeekendsOnly,
 }: Props) {
   // Count events per day
   const eventCounts = useMemo(() => {
@@ -90,12 +95,26 @@ export function DateRangeFilter({
         )}
       </div>
 
+      {/* Weekends-only toggle */}
+      <button
+        onClick={onToggleWeekendsOnly}
+        className={`w-full mb-2 text-[11px] font-medium py-1 rounded-md transition-colors ${
+          weekendsOnly
+            ? 'bg-violet-600 text-white'
+            : 'text-slate-400 hover:text-white border border-slate-700 hover:border-slate-500'
+        }`}
+      >
+        Weekends only
+      </button>
+
       {/* Day-of-week headers */}
       <div className="grid grid-cols-7 gap-0.5 mb-1">
         {DAY_LABELS.map((label, i) => (
           <div
             key={i}
-            className="text-center text-[9px] font-medium text-slate-600 py-0.5"
+            className={`text-center text-[9px] font-medium py-0.5 ${
+              WEEKEND_COLS.has(i) ? 'text-violet-400' : 'text-slate-600'
+            }`}
           >
             {label}
           </div>
@@ -106,12 +125,13 @@ export function DateRangeFilter({
       <div className="flex flex-col gap-0.5">
         {weeks.map((week, wi) => (
           <div key={wi} className="grid grid-cols-7 gap-0.5">
-            {week.map(day => {
+            {week.map((day, di) => {
               const date = dayToDate(day)
               const count = eventCounts[date] || 0
               const level = activityLevel(count)
               const inRange = isInRange(day)
               const endpoint = isEndpoint(day)
+              const isWeekend = WEEKEND_COLS.has(di)
 
               return (
                 <button
@@ -126,7 +146,9 @@ export function DateRangeFilter({
                       ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
                       : inRange
                         ? 'bg-blue-600/20 text-blue-300'
-                        : 'text-slate-400 hover:bg-slate-700/60 hover:text-white'
+                        : isWeekend
+                          ? 'text-violet-300 hover:bg-violet-700/40 hover:text-white'
+                          : 'text-slate-400 hover:bg-slate-700/60 hover:text-white'
                     }
                   `}
                 >

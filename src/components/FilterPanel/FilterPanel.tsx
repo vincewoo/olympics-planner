@@ -22,12 +22,14 @@ interface Props {
   selectedZones: Set<string>
   medalOnly: boolean
   canadaMedalWatch: boolean
+  weekendsOnly: boolean
   startDate: string | null
   endDate: string | null
   onToggleSport: (sport: string) => void
   onToggleZone: (zone: string) => void
   onToggleMedalOnly: () => void
   onToggleCanadaMedalWatch: () => void
+  onToggleWeekendsOnly: () => void
   onSelectDate: (date: string) => void
   onClearDates: () => void
   onClearAll: () => void
@@ -180,18 +182,20 @@ export function FilterPanel({
   selectedZones,
   medalOnly,
   canadaMedalWatch,
+  weekendsOnly,
   startDate,
   endDate,
   onToggleSport,
   onToggleZone,
   onToggleMedalOnly,
   onToggleCanadaMedalWatch,
+  onToggleWeekendsOnly,
   onSelectDate,
   onClearDates,
   onClearAll,
   onClose,
 }: Props) {
-  const hasFilters = selectedSports.size > 0 || selectedZones.size > 0 || medalOnly || canadaMedalWatch || startDate !== null
+  const hasFilters = selectedSports.size > 0 || selectedZones.size > 0 || medalOnly || canadaMedalWatch || weekendsOnly || startDate !== null
 
   return (
     <aside className="w-full md:w-60 shrink-0 bg-[#0d1f3c] flex flex-col h-full overflow-y-auto">
@@ -219,6 +223,14 @@ export function FilterPanel({
       </div>
       {hasFilters && (
         <div className="px-4 py-2 flex flex-wrap gap-1 border-b border-slate-700/50">
+          {weekendsOnly && (
+            <button
+              onClick={onToggleWeekendsOnly}
+              className="text-xs bg-violet-700 text-white rounded-full px-2 py-0.5 flex items-center gap-1 hover:bg-violet-800"
+            >
+              Weekends <X size={10} />
+            </button>
+          )}
           {startDate && (
             <button
               onClick={onClearDates}
@@ -272,8 +284,10 @@ export function FilterPanel({
           allEvents={allEvents}
           startDate={startDate}
           endDate={endDate}
+          weekendsOnly={weekendsOnly}
           onSelectDate={onSelectDate}
           onClear={onClearDates}
+          onToggleWeekendsOnly={onToggleWeekendsOnly}
         />
 
         {/* Medal Events checkbox */}
