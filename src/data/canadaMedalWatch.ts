@@ -17,6 +17,12 @@ export interface CanadaSportProfile {
   tier: 'gold' | 'medal' | 'watch'
   /** Why Canada is competitive in this sport */
   reason: string
+  /**
+   * Optional list of substrings to match against `sessionDescription`.
+   * When present, only sessions whose description contains at least one keyword are shown.
+   * When absent, all sessions in the sport are shown.
+   */
+  eventKeywords?: string[]
 }
 
 /**
@@ -28,10 +34,34 @@ export const CANADA_MEDAL_WATCH: Record<string, CanadaSportProfile> = {
   'Swimming': {
     tier: 'gold',
     reason: '8 medals at Paris 2024 incl. 3 gold (Summer McIntosh). McIntosh, Kharun & Liendo all in prime for 2028.',
+    // McIntosh: 200m/400m IM, 200m/400m Free, 200m Fly; Liendo: 50m/100m Fly; Kharun: 100m/200m Fly; relay teams
+    eventKeywords: [
+      "Women's 200m Individual Medley",
+      "Women's 400m Individual Medley",
+      "Women's 200m Butterfly",
+      "Women's 400m Freestyle",
+      "Men's 50m Butterfly",
+      "Men's 100m Butterfly",
+      "Men's 200m Butterfly",
+      '4x100m Freestyle Relay',
+      '4x200m Freestyle Relay',
+      '4x100m Medley Relay',
+      '4x100m Mixed Medley Relay',
+    ],
   },
   'Athletics (Track & Field)': {
     tier: 'gold',
     reason: '5 medals at Paris 2024 incl. 3 gold. Katzberg (hammer), Rogers (hammer), relay team all returning.',
+    // Katzberg: Men's Hammer; Rogers: Women's Hammer; relay teams
+    eventKeywords: [
+      "Men's Hammer Throw",
+      "Women's Hammer Throw",
+      "Men's 4x100m Relay",
+      "Women's 4x100m Relay",
+      'Mixed 4x400m Relay',
+      "Men's 4x400m Relay",
+      "Women's 4x400m Relay",
+    ],
   },
 
   // ── STRONG MEDAL CONTENDERS ─────────────────────────────────────
@@ -50,14 +80,19 @@ export const CANADA_MEDAL_WATCH: Record<string, CanadaSportProfile> = {
   'Weightlifting': {
     tier: 'medal',
     reason: 'Silver at Paris 2024. Maude Charron a returning medal contender.',
+    // Charron competed at 71kg (Paris 2024); closest 2028 category is 69kg
+    eventKeywords: ["Women's 69kg"],
   },
   'Judo': {
     tier: 'medal',
     reason: 'Gold at Paris 2024 (Christa Deguchi). Rising program with strong depth.',
+    // Deguchi competes at Women's -57kg
+    eventKeywords: ["Women's -57kg"],
   },
   'Basketball': {
     tier: 'medal',
     reason: 'Deep NBA talent pool (SGA, Murray). Men\'s team building toward first medal since 1936.',
+    eventKeywords: ["Men's"],
   },
   'Surfing': {
     tier: 'medal',
@@ -72,6 +107,7 @@ export const CANADA_MEDAL_WATCH: Record<string, CanadaSportProfile> = {
   'Beach Volleyball': {
     tier: 'watch',
     reason: 'Silver at Paris 2024. Brandie Wilkerson & Melissa Humana-Paredes among world\'s best teams.',
+    eventKeywords: ["Women's"],
   },
   'Rugby Sevens': {
     tier: 'watch',
@@ -80,6 +116,8 @@ export const CANADA_MEDAL_WATCH: Record<string, CanadaSportProfile> = {
   'Fencing': {
     tier: 'watch',
     reason: 'Bronze at Paris 2024 (Eleanor Harvey, first-ever Canadian fencing medal). Rising program.',
+    // Harvey competes in Women's Foil
+    eventKeywords: ["Women's Foil"],
   },
   'Trampoline Gymnastics': {
     tier: 'watch',

@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import type { OlympicEvent } from '../types'
-import { CANADA_MEDAL_WATCH_SPORTS } from '../data/canadaMedalWatch'
+import { CANADA_MEDAL_WATCH } from '../data/canadaMedalWatch'
 
 const MEDAL_SESSION_TYPES = new Set(['Final', 'Bronze'])
 
@@ -18,7 +18,14 @@ export function useFilteredEvents(
       const sportOk = selectedSports.size === 0 || selectedSports.has(e.sport)
       const zoneOk = selectedZones.size === 0 || selectedZones.has(e.zone)
       const medalOk = !medalOnly || MEDAL_SESSION_TYPES.has(e.sessionType)
-      const canadaOk = !canadaMedalWatch || CANADA_MEDAL_WATCH_SPORTS.has(e.sport)
+      const canadaProfile = CANADA_MEDAL_WATCH[e.sport]
+      const canadaOk = !canadaMedalWatch || (() => {
+        if (!canadaProfile) return false
+        if (canadaProfile.eventKeywords && canadaProfile.eventKeywords.length > 0) {
+          return canadaProfile.eventKeywords.some(kw => e.sessionDescription.includes(kw))
+        }
+        return true
+      })()
       const dateOk =
         !startDate ||
         (e.date >= startDate && e.date <= (endDate ?? startDate))
