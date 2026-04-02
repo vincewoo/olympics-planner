@@ -198,7 +198,7 @@ export function FilterPanel({
   const hasFilters = selectedSports.size > 0 || selectedZones.size > 0 || medalOnly || canadaMedalWatch || weekendsOnly || startDate !== null
 
   return (
-    <aside className="w-full md:w-60 shrink-0 bg-[#0d1f3c] flex flex-col h-full overflow-y-auto">
+    <aside className="w-full md:w-60 shrink-0 bg-[#0d1f3c] flex flex-col h-full">
       <div className="px-4 py-4 border-b border-slate-700/50 flex items-center justify-between">
         <span className="text-sm font-semibold text-white">Filters</span>
         <div className="flex items-center gap-2">
@@ -278,7 +278,7 @@ export function FilterPanel({
           ))}
         </div>
       )}
-      <div className="px-4 py-4 flex-1">
+      <div className="px-4 py-4 flex-1 overflow-y-auto">
         {/* Date Range mini-calendar */}
         <DateRangeFilter
           allEvents={allEvents}
