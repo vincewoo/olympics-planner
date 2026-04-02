@@ -132,7 +132,7 @@ export const CANADA_MEDAL_WATCH_SPORTS = new Set(Object.keys(CANADA_MEDAL_WATCH)
 
 /** Tier display config */
 export const TIER_CONFIG = {
-  gold:  { label: 'Gold Favourite', emoji: '🥇', color: 'text-yellow-400' },
-  medal: { label: 'Medal Contender', emoji: '🥈', color: 'text-slate-300' },
-  watch: { label: 'Competitive', emoji: '🍁', color: 'text-red-400' },
+  gold:  { label: 'Gold Favourite',  opacity: 1 },
+  medal: { label: 'Medal Contender', opacity: 0.66 },
+  watch: { label: 'Dark Horse',      opacity: 0.33 },
 } as const
