@@ -220,7 +220,7 @@ export function getCanadaTooltip(sport: string, sessionDescription: string): str
   if (!profile.eventKeywords || profile.eventKeywords.length === 0) {
     return `${TIER_CONFIG[profile.tier].label} — ${profile.reason}`
   }
-  const match = profile.eventKeywords.find(et => sessionDescription.includes(et.keyword))
-  if (match) return `${match.keyword} — ${TIER_CONFIG[profile.tier].label} — ${match.athlete}`
+  const matches = profile.eventKeywords.filter(et => sessionDescription.includes(et.keyword))
+  if (matches.length > 0) return matches.map(m => `${m.keyword} — ${TIER_CONFIG[profile.tier].label} — ${m.athlete}`).join('\n')
   return `${TIER_CONFIG[profile.tier].label} — ${profile.reason}`
 }
