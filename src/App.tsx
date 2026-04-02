@@ -21,7 +21,7 @@ export default function App() {
   const [startDate, setStartDate] = useState<string | null>(null)
   const [endDate, setEndDate] = useState<string | null>(null)
   const [filterOpen, setFilterOpen] = useState(false)
-  const { watchlistIds, toggle } = useWatchlist()
+  const { watchlistIds, toggle, replaceAll, addMany } = useWatchlist()
 
   const allSports = useMemo(
     () => [...new Set(allEvents.map(e => e.sport))].sort(),
@@ -175,6 +175,8 @@ export default function App() {
               allEvents={allEvents}
               watchlistIds={watchlistIds}
               onToggleWatch={toggle}
+              onReplaceWatchlist={replaceAll}
+              onAddToWatchlist={addMany}
             />
           )}
         </main>
