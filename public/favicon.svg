@@ -52,7 +52,8 @@
      stroke-width="30"
      stroke="#fff"
      fill="none"
-     id="g4">
+     id="g4"
+     transform="translate(0, 262.5)">
     <g
        stroke-width="45"
        id="g6">
