@@ -7,14 +7,19 @@ export function useFilteredEvents(
   events: OlympicEvent[],
   selectedSports: Set<string>,
   selectedZones: Set<string>,
-  medalOnly: boolean
+  medalOnly: boolean,
+  startDate: string | null,
+  endDate: string | null
 ): OlympicEvent[] {
   return useMemo(() => {
     return events.filter(e => {
       const sportOk = selectedSports.size === 0 || selectedSports.has(e.sport)
       const zoneOk = selectedZones.size === 0 || selectedZones.has(e.zone)
       const medalOk = !medalOnly || MEDAL_SESSION_TYPES.has(e.sessionType)
-      return sportOk && zoneOk && medalOk
+      const dateOk =
+        !startDate ||
+        (e.date >= startDate && e.date <= (endDate ?? startDate))
+      return sportOk && zoneOk && medalOk && dateOk
     })
-  }, [events, selectedSports, selectedZones, medalOnly])
+  }, [events, selectedSports, selectedZones, medalOnly, startDate, endDate])
 }

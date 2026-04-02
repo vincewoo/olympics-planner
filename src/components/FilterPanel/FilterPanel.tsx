@@ -1,5 +1,7 @@
 import { X, ChevronDown, ChevronUp } from 'lucide-react'
 import { useState } from 'react'
+import type { OlympicEvent } from '../../types'
+import { DateRangeFilter } from './DateRangeFilter'
 
 // Zones that are outside of Southern California
 const OUT_OF_SOCAL_ZONES = new Set([
@@ -12,14 +14,19 @@ const OUT_OF_SOCAL_ZONES = new Set([
 ])
 
 interface Props {
+  allEvents: OlympicEvent[]
   allSports: string[]
   allZones: string[]
   selectedSports: Set<string>
   selectedZones: Set<string>
   medalOnly: boolean
+  startDate: string | null
+  endDate: string | null
   onToggleSport: (sport: string) => void
   onToggleZone: (zone: string) => void
   onToggleMedalOnly: () => void
+  onSelectDate: (date: string) => void
+  onClearDates: () => void
   onClearAll: () => void
 }
 
@@ -150,17 +157,22 @@ function ZoneFilterSection({
 }
 
 export function FilterPanel({
+  allEvents,
   allSports,
   allZones,
   selectedSports,
   selectedZones,
   medalOnly,
+  startDate,
+  endDate,
   onToggleSport,
   onToggleZone,
   onToggleMedalOnly,
+  onSelectDate,
+  onClearDates,
   onClearAll,
 }: Props) {
-  const hasFilters = selectedSports.size > 0 || selectedZones.size > 0 || medalOnly
+  const hasFilters = selectedSports.size > 0 || selectedZones.size > 0 || medalOnly || startDate !== null
 
   return (
     <aside className="w-60 shrink-0 bg-[#0d1f3c] flex flex-col h-full overflow-y-auto">
@@ -177,6 +189,17 @@ export function FilterPanel({
       </div>
       {hasFilters && (
         <div className="px-4 py-2 flex flex-wrap gap-1 border-b border-slate-700/50">
+          {startDate && (
+            <button
+              onClick={onClearDates}
+              className="text-xs bg-emerald-700 text-white rounded-full px-2 py-0.5 flex items-center gap-1 hover:bg-emerald-800"
+            >
+              📅 {endDate
+                ? `Jul ${parseInt(startDate.slice(-2))}–${parseInt(endDate.slice(-2))}`
+                : `Jul ${parseInt(startDate.slice(-2))}`
+              } <X size={10} />
+            </button>
+          )}
           {medalOnly && (
             <button
               onClick={onToggleMedalOnly}
@@ -206,6 +229,15 @@ export function FilterPanel({
         </div>
       )}
       <div className="px-4 py-4 flex-1">
+        {/* Date Range mini-calendar */}
+        <DateRangeFilter
+          allEvents={allEvents}
+          startDate={startDate}
+          endDate={endDate}
+          onSelectDate={onSelectDate}
+          onClear={onClearDates}
+        />
+
         {/* Medal Events checkbox */}
         <div className="mb-5">
           <label className="flex items-center gap-3 cursor-pointer group">

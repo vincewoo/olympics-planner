@@ -16,6 +16,8 @@ export default function App() {
   const [selectedSports, setSelectedSports] = useState<Set<string>>(new Set())
   const [selectedZones, setSelectedZones] = useState<Set<string>>(new Set())
   const [medalOnly, setMedalOnly] = useState(false)
+  const [startDate, setStartDate] = useState<string | null>(null)
+  const [endDate, setEndDate] = useState<string | null>(null)
   const { watchlistIds, toggle } = useWatchlist()
 
   const allSports = useMemo(
@@ -27,7 +29,7 @@ export default function App() {
     []
   )
 
-  const filteredEvents = useFilteredEvents(allEvents, selectedSports, selectedZones, medalOnly)
+  const filteredEvents = useFilteredEvents(allEvents, selectedSports, selectedZones, medalOnly, startDate, endDate)
 
   function toggleSport(sport: string) {
     setSelectedSports(prev => {
@@ -45,10 +47,34 @@ export default function App() {
     })
   }
 
+  function selectDate(date: string) {
+    if (!startDate) {
+      // Nothing selected → set start
+      setStartDate(date)
+      setEndDate(null)
+    } else if (!endDate) {
+      if (date === startDate) {
+        // Clicking the same date → deselect
+        setStartDate(null)
+      } else {
+        // Second click → create range
+        const [s, e] = date < startDate ? [date, startDate] : [startDate, date]
+        setStartDate(s)
+        setEndDate(e)
+      }
+    } else {
+      // Range exists → start fresh with clicked date
+      setStartDate(date)
+      setEndDate(null)
+    }
+  }
+
   function clearAll() {
     setSelectedSports(new Set())
     setSelectedZones(new Set())
     setMedalOnly(false)
+    setStartDate(null)
+    setEndDate(null)
   }
 
   return (
@@ -72,14 +98,19 @@ export default function App() {
         {/* Sidebar — hide on watchlist tab */}
         {activeTab !== 'watchlist' && (
           <FilterPanel
+            allEvents={allEvents}
             allSports={allSports}
             allZones={allZones}
             selectedSports={selectedSports}
             selectedZones={selectedZones}
             medalOnly={medalOnly}
+            startDate={startDate}
+            endDate={endDate}
             onToggleSport={toggleSport}
             onToggleZone={toggleZone}
             onToggleMedalOnly={() => setMedalOnly(v => !v)}
+            onSelectDate={selectDate}
+            onClearDates={() => { setStartDate(null); setEndDate(null) }}
             onClearAll={clearAll}
           />
         )}
