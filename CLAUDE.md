@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with th
 
 ## Project Overview
 
-Olympics Planner is a single-page web app for browsing and planning attendance at the LA 2028 Olympic Games. Users can filter events by sport and venue zone, view schedules in list or calendar format, and maintain a personal watchlist (persisted in localStorage).
+Olympics Planner is a single-page web app for browsing and planning attendance at the LA 2028 Olympic Games. Users can filter events by sport, venue zone, date range, and medal-round type; optionally highlight Canada's medal contenders; view schedules in list or calendar format; and maintain a personal watchlist (persisted in localStorage). The app is fully responsive for mobile and desktop.
 
 ## Tech Stack
 
@@ -37,14 +37,16 @@ src/
 ├── components/          # UI components (folder-per-component)
 │   ├── CalendarView/    # Day-by-day calendar with absolute-positioned event blocks
 │   ├── EventCard/       # Individual event display card
-│   ├── FilterPanel/     # Sidebar with sport & zone filters
+│   ├── FilterPanel/     # Sidebar with sport & zone filters, date picker, medal toggles
+│   │   └── DateRangeFilter.tsx  # Mini calendar for selecting a date range
 │   ├── ListView/        # Chronological event list grouped by date
 │   ├── Tabs/            # List / Calendar / Watchlist tab switcher
 │   └── WatchlistPanel/  # Saved events view
 ├── data/
-│   └── schedule.json    # Full LA 2028 Olympic schedule (~300KB)
+│   ├── schedule.json        # Full LA 2028 Olympic schedule (~300KB)
+│   └── canadaMedalWatch.ts  # Canada medal-potential profiles by sport (gold/medal/watch tiers)
 ├── hooks/
-│   ├── useFilteredEvents.ts  # Filters events by selected sports/zones
+│   ├── useFilteredEvents.ts  # Filters events by sport, zone, date range, medal type, Canada watch
 │   └── useWatchlist.ts       # Watchlist state with localStorage persistence
 ├── types/
 │   └── index.ts         # OlympicEvent interface
@@ -60,6 +62,11 @@ src/
 - **Data is static JSON** — `src/data/schedule.json` is imported directly, no API calls
 - **Watchlist uses localStorage** — managed by the `useWatchlist` hook
 - **Filters use Set-based state** — `selectedSports` and `selectedZones` are `Set<string>`
+- **Zone grouping** — FilterPanel groups venue zones into "SoCal Venues" and "Other Venues" sections
+- **Medal-only toggle** — `medalOnly` boolean in App state; filters to `sessionType` of `Final` or `Bronze`
+- **Date range filter** — `startDate`/`endDate` strings (`"2028-07-DD"`); `DateRangeFilter` renders a mini calendar with activity-density dots
+- **Canada Medal Watch** — `canadaMedalWatch` boolean filters to sports listed in `src/data/canadaMedalWatch.ts`; sport chips in the filter sidebar show tier emoji (🥇/🥈/🍁) when enabled
+- **Responsive layout** — sidebar collapses on mobile; filter panel slides in as a sheet; Tabs component adapts for small screens
 
 ### OlympicEvent Type
 
