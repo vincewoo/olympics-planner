@@ -11,7 +11,8 @@ export function useFilteredEvents(
   medalOnly: boolean,
   canadaMedalWatch: boolean,
   startDate: string | null,
-  endDate: string | null
+  endDate: string | null,
+  weekendsOnly: boolean
 ): OlympicEvent[] {
   return useMemo(() => {
     return events.filter(e => {
@@ -29,7 +30,11 @@ export function useFilteredEvents(
       const dateOk =
         !startDate ||
         (e.date >= startDate && e.date <= (endDate ?? startDate))
-      return sportOk && zoneOk && medalOk && canadaOk && dateOk
+      const weekendOk = !weekendsOnly || (() => {
+        const dow = new Date(e.date).getDay()
+        return dow === 0 || dow === 6
+      })()
+      return sportOk && zoneOk && medalOk && canadaOk && dateOk && weekendOk
     })
-  }, [events, selectedSports, selectedZones, medalOnly, canadaMedalWatch, startDate, endDate])
+  }, [events, selectedSports, selectedZones, medalOnly, canadaMedalWatch, startDate, endDate, weekendsOnly])
 }
