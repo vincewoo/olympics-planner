@@ -22,7 +22,7 @@ export function useFilteredEvents(
       const canadaOk = !canadaMedalWatch || (() => {
         if (!canadaProfile) return false
         if (canadaProfile.eventKeywords && canadaProfile.eventKeywords.length > 0) {
-          return canadaProfile.eventKeywords.some(kw => e.sessionDescription.includes(kw))
+          return canadaProfile.eventKeywords.some(et => e.sessionDescription.includes(et.keyword))
         }
         return true
       })()
