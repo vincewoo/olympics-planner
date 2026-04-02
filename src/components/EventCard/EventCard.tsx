@@ -1,6 +1,7 @@
 import { Star } from 'lucide-react'
 import type { OlympicEvent } from '../../types'
 import { CANADA_MEDAL_WATCH, TIER_CONFIG, getCanadaTooltip } from '../../data/canadaMedalWatch'
+import { Tooltip } from '../Tooltip/Tooltip'
 
 const SPORT_COLORS: Record<string, string> = {
   'Aquatics': '#0057A8',
@@ -77,12 +78,11 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
             {isMedalEvent && <span>🏅</span>}
             {event.sport}
             {canadaProfile && (
-              <span
-                style={{ opacity: TIER_CONFIG[canadaProfile.tier].opacity }}
-                title={getCanadaTooltip(event.sport, event.sessionDescription) ?? `Canada: ${TIER_CONFIG[canadaProfile.tier].label}`}
-              >
-                🍁
-              </span>
+              <Tooltip text={getCanadaTooltip(event.sport, event.sessionDescription) ?? `Canada: ${TIER_CONFIG[canadaProfile.tier].label}`}>
+                <span style={{ opacity: TIER_CONFIG[canadaProfile.tier].opacity }}>
+                  🍁
+                </span>
+              </Tooltip>
             )}
           </span>
           <span className="text-xs text-slate-400 shrink-0">

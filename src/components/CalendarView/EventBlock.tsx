@@ -1,6 +1,7 @@
 import { Star } from 'lucide-react'
 import type { OlympicEvent } from '../../types'
 import { timeToMinutes } from '../../utils/timeUtils'
+import { Tooltip } from '../Tooltip/Tooltip'
 
 const SPORT_COLORS: Record<string, string> = {
   'Aquatics': '#0057A8',
@@ -72,8 +73,10 @@ export function EventBlock({ event, colIndex, totalCols, isWatched, onToggleWatc
         backgroundColor: color + '22',
         borderLeft: `3px solid ${color}`,
       }}
-      title={`${event.sport} — ${event.sessionDescription}\n${event.startTime}–${event.endTime} @ ${event.venue}`}
     >
+      <Tooltip text={`${event.sport} — ${event.sessionDescription}\n${event.startTime}–${event.endTime} @ ${event.venue}`} className="absolute inset-0">
+        <span className="absolute inset-0" />
+      </Tooltip>
       <div className="px-1.5 py-1 flex flex-col h-full overflow-hidden">
         <div className="flex items-start justify-between gap-1">
           <span className="text-[10px] font-bold leading-tight truncate" style={{ color }}>
