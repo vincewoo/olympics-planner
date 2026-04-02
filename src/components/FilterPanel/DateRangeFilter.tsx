@@ -117,7 +117,7 @@ export function DateRangeFilter({
                 <button
                   key={day}
                   onClick={() => onSelectDate(date)}
-                  title={`Jul ${day} — ${count} sessions`}
+                  aria-label={`Jul ${day} — ${count} sessions`}
                   className={`
                     relative flex flex-col items-center justify-center
                     rounded-md py-1.5 text-[11px] font-medium
