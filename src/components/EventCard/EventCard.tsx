@@ -98,6 +98,9 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
           {event.sessionDescription}
         </p>
         <div className="flex flex-wrap gap-1.5 mt-2">
+          <span className="text-xs font-mono bg-slate-800 text-slate-100 rounded px-1.5 py-0.5">
+            {event.sessionCode}
+          </span>
           <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2 py-0.5">
             {event.sessionType}
           </span>
