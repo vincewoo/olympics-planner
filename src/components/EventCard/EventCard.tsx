@@ -58,6 +58,11 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
   const color = sportColor(event.sport)
   const isMedalEvent = event.sessionType === 'Final' || event.sessionType === 'Bronze'
   const canadaProfile = CANADA_MEDAL_WATCH[event.sport]
+  // Only show the maple leaf if this specific session matches a Canada keyword (or the sport has no keywords)
+  const showCanadaLeaf = canadaProfile !== undefined && (() => {
+    if (!canadaProfile.eventKeywords || canadaProfile.eventKeywords.length === 0) return true
+    return canadaProfile.eventKeywords.some(et => event.sessionDescription.includes(et.keyword))
+  })()
 
   return (
     <div
@@ -75,11 +80,11 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
             className="text-xs font-semibold uppercase tracking-wide flex items-center gap-1"
             style={{ color }}
           >
-            {isMedalEvent && <span>🏅</span>}
+            {isMedalEvent && <span className="mr-0.5">🏅</span>}
             {event.sport}
-            {canadaProfile && (
-              <Tooltip text={getCanadaTooltip(event.sport, event.sessionDescription) ?? `Canada: ${TIER_CONFIG[canadaProfile.tier].label}`}>
-                <span style={{ opacity: TIER_CONFIG[canadaProfile.tier].opacity }}>
+            {showCanadaLeaf && (
+              <Tooltip text={getCanadaTooltip(event.sport, event.sessionDescription) ?? `Canada: ${TIER_CONFIG[canadaProfile!.tier].label}`}>
+                <span style={{ opacity: TIER_CONFIG[canadaProfile!.tier].opacity }} className="cursor-help">
                   🍁
                 </span>
               </Tooltip>
