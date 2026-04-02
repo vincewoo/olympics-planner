@@ -4,6 +4,19 @@ import { CANADA_MEDAL_WATCH } from '../data/canadaMedalWatch'
 
 const MEDAL_SESSION_TYPES = new Set(['Final', 'Bronze'])
 
+function hasMedalInDescription(desc: string): boolean {
+  if (/(Gold|Silver|Bronze)\s+Medal/i.test(desc)) return true
+  return desc.split('\n').some(line => {
+    const t = line.trim()
+    if (!/\bFinals?\b/i.test(t)) return false
+    if (/\d+\/\d+\s+Finals?\b/i.test(t)) return false   // e.g. "1/32 Final" (elimination round)
+    if (/\bFinals?\s+[B-Z]\b/i.test(t)) return false    // e.g. "Final B/C" (consolation)
+    if (/\bFinals?\s+\d+-\d+/i.test(t)) return false    // e.g. "Final 7-12" (consolation)
+    if (/\bFinals?\s+for\s+Places/i.test(t)) return false
+    return true
+  })
+}
+
 export function useFilteredEvents(
   events: OlympicEvent[],
   selectedSports: Set<string>,
@@ -18,7 +31,7 @@ export function useFilteredEvents(
     return events.filter(e => {
       const sportOk = selectedSports.size === 0 || selectedSports.has(e.sport)
       const zoneOk = selectedZones.size === 0 || selectedZones.has(e.zone)
-      const medalOk = !medalOnly || MEDAL_SESSION_TYPES.has(e.sessionType)
+      const medalOk = !medalOnly || MEDAL_SESSION_TYPES.has(e.sessionType) || hasMedalInDescription(e.sessionDescription)
       const canadaProfile = CANADA_MEDAL_WATCH[e.sport]
       const canadaOk = !canadaMedalWatch || (() => {
         if (!canadaProfile) return false
