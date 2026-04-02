@@ -31,7 +31,8 @@ export function useFilteredEvents(
         !startDate ||
         (e.date >= startDate && e.date <= (endDate ?? startDate))
       const weekendOk = !weekendsOnly || (() => {
-        const dow = new Date(e.date).getDay()
+        const [y, m, d] = e.date.split('-').map(Number)
+        const dow = new Date(y, m - 1, d).getDay()
         return dow === 0 || dow === 6
       })()
       return sportOk && zoneOk && medalOk && canadaOk && dateOk && weekendOk
