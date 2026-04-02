@@ -15,6 +15,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>('list')
   const [selectedSports, setSelectedSports] = useState<Set<string>>(new Set())
   const [selectedZones, setSelectedZones] = useState<Set<string>>(new Set())
+  const [medalOnly, setMedalOnly] = useState(false)
   const { watchlistIds, toggle } = useWatchlist()
 
   const allSports = useMemo(
@@ -26,7 +27,7 @@ export default function App() {
     []
   )
 
-  const filteredEvents = useFilteredEvents(allEvents, selectedSports, selectedZones)
+  const filteredEvents = useFilteredEvents(allEvents, selectedSports, selectedZones, medalOnly)
 
   function toggleSport(sport: string) {
     setSelectedSports(prev => {
@@ -47,6 +48,7 @@ export default function App() {
   function clearAll() {
     setSelectedSports(new Set())
     setSelectedZones(new Set())
+    setMedalOnly(false)
   }
 
   return (
@@ -74,8 +76,10 @@ export default function App() {
             allZones={allZones}
             selectedSports={selectedSports}
             selectedZones={selectedZones}
+            medalOnly={medalOnly}
             onToggleSport={toggleSport}
             onToggleZone={toggleZone}
+            onToggleMedalOnly={() => setMedalOnly(v => !v)}
             onClearAll={clearAll}
           />
         )}

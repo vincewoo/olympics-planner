@@ -1,16 +1,20 @@
 import { useMemo } from 'react'
 import type { OlympicEvent } from '../types'
 
+const MEDAL_SESSION_TYPES = new Set(['Final', 'Bronze'])
+
 export function useFilteredEvents(
   events: OlympicEvent[],
   selectedSports: Set<string>,
-  selectedZones: Set<string>
+  selectedZones: Set<string>,
+  medalOnly: boolean
 ): OlympicEvent[] {
   return useMemo(() => {
     return events.filter(e => {
       const sportOk = selectedSports.size === 0 || selectedSports.has(e.sport)
       const zoneOk = selectedZones.size === 0 || selectedZones.has(e.zone)
-      return sportOk && zoneOk
+      const medalOk = !medalOnly || MEDAL_SESSION_TYPES.has(e.sessionType)
+      return sportOk && zoneOk && medalOk
     })
-  }, [events, selectedSports, selectedZones])
+  }, [events, selectedSports, selectedZones, medalOnly])
 }
