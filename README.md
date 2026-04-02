@@ -11,7 +11,10 @@ A web app to browse, filter, and plan your schedule for the **LA 2028 Olympic Ga
 
 ## Features
 
-- **Filter by Sport & Zone** — Narrow down the full schedule using the sidebar filter panel
+- **Filter by Sport & Zone** — Sidebar filter panel with sport chips and venue zones grouped into SoCal and Other
+- **Date Range Filter** — Mini calendar picker to narrow the schedule to a specific day or range
+- **Medal Events Toggle** — Show only Finals and Bronze-medal sessions
+- **Canada Medal Watch** — Highlight sports where Canada has medal potential, with tier indicators (🥇 Gold Favourite, 🥈 Medal Contender, 🍁 Competitive)
 - **List View** — Browse events chronologically, grouped by date
 - **Calendar View** — Visualize sessions as time blocks on a day-by-day calendar
 - **Watchlist** — Save events you're interested in (persisted in localStorage)
@@ -67,12 +70,13 @@ src/
 ├── components/          # UI components (folder-per-component)
 │   ├── CalendarView/    # Day-based calendar with positioned event blocks
 │   ├── EventCard/       # Individual event card
-│   ├── FilterPanel/     # Sport & zone filter sidebar
+│   ├── FilterPanel/     # Sport & zone filter sidebar, date picker, medal toggles
 │   ├── ListView/        # Chronological list grouped by date
 │   ├── Tabs/            # Tab switcher (List / Calendar / Watchlist)
 │   └── WatchlistPanel/  # Saved events view
 ├── data/
-│   └── schedule.json    # Full LA 2028 competition schedule
+│   ├── schedule.json        # Full LA 2028 competition schedule
+│   └── canadaMedalWatch.ts  # Canada medal-potential profiles by sport
 ├── hooks/               # Custom React hooks
 ├── types/               # TypeScript interfaces
 └── utils/               # Date/time helpers
