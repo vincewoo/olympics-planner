@@ -79,22 +79,24 @@ export const CANADA_MEDAL_WATCH: Record<string, CanadaSportProfile> = {
       { keyword: "Men's 800m", athlete: 'Marco Arop — Paris 2024 silver, 3 consecutive World Championship medals' },
       // Damian Warner — Tokyo 2020 gold, withdrew from 2025 Worlds with injury
       { keyword: "Men's Decathlon", athlete: 'Damian Warner — Tokyo 2020 gold (injury concern; withdrew from 2025 Worlds)' },
-      // Men's 4x100m relay — GOLD at Paris 2024
-      { keyword: "Men's 4x100m Relay", athlete: 'Canadian relay — Paris 2024 Olympic gold medallists' },
-      // Women's 4x100m relay — competitive sprint squad
-      { keyword: "Women's 4x100m Relay", athlete: 'Canadian relay — competitive sprint depth' },
+      // Men's 4x100m relay — GOLD at Paris 2024, SILVER at 2025 Worlds
+      { keyword: "Men's 4x100m Relay", athlete: 'Canadian relay — Paris 2024 gold, 2025 Worlds silver' },
+      // Women's 4x100m relay — Canadian record 42.38 at 2025 Worlds
+      { keyword: "Women's 4x100m Relay", athlete: 'Canadian relay — improving sprint depth, national record at 2025 Worlds' },
+      // Mixed 4x100m relay — inaugural gold at 2025 World Relays
+      { keyword: "Mixed 4x100m Relay", athlete: 'Canadian relay — 2025 World Relays gold medallists (inaugural event)' },
     ],
   },
 
   // ── STRONG MEDAL CONTENDERS ─────────────────────────────────────
   'Canoe Sprint': {
     tier: 'medal',
-    reason: 'Katie Vincent: Paris 2024 gold (C-2 500m), C-1 500m world record holder, silver at 2025 Worlds.',
+    reason: 'Katie Vincent: Paris 2024 gold (C-1 200m) & bronze (C-2 500m). C-1 500m world record holder. 2025 Worlds C-2 silver.',
     eventKeywords: [
-      // Katie Vincent & Sloan MacKenzie — Paris 2024 gold in C-2 500m
-      { keyword: "Women's Canoe Double 500m", athlete: 'Katie Vincent & Sloan MacKenzie — Paris 2024 Olympic gold medallists' },
-      // Katie Vincent — C-1 500m world record holder. Olympic event is C-1 200m
-      { keyword: "Women's Canoe Single 200m", athlete: 'Katie Vincent — C-1 500m world record holder, elite paddler' },
+      // Katie Vincent — Paris 2024 gold in C-1 200m, world record holder
+      { keyword: "Women's Canoe Single 200m", athlete: 'Katie Vincent — Paris 2024 gold, C-1 500m world record holder' },
+      // Katie Vincent & Zoe Wojtyk — C-2 500m silver at 2025 Worlds
+      { keyword: "Women's Canoe Double 500m", athlete: 'Katie Vincent & Zoe Wojtyk — 2025 Worlds silver (Paris 2024 bronze with MacKenzie)' },
     ],
   },
   'Weightlifting': {
@@ -106,9 +108,9 @@ export const CANADA_MEDAL_WATCH: Record<string, CanadaSportProfile> = {
   },
   'Basketball': {
     tier: 'medal',
-    reason: 'Deep NBA talent pool (SGA, Murray, Barrett, Dort). Men\'s team among FIBA top-10 and building toward first medal since 1936.',
+    reason: 'SGA (2025 NBA MVP & Finals MVP), Murray, Barrett. FIBA top-6. 25 Canadians on NBA rosters. Building toward first medal since 1936.',
     eventKeywords: [
-      { keyword: "Men's", athlete: 'Shai Gilgeous-Alexander, Jamal Murray, RJ Barrett & deep NBA roster' },
+      { keyword: "Men's", athlete: 'Shai Gilgeous-Alexander (2025 NBA MVP), Jamal Murray, RJ Barrett & 25 Canadians in NBA' },
     ],
   },
   'Surfing': {
@@ -119,8 +121,8 @@ export const CANADA_MEDAL_WATCH: Record<string, CanadaSportProfile> = {
     ],
   },
   'Lacrosse': {
-    tier: 'medal',
-    reason: 'New sport for 2028. Canada is the birthplace of lacrosse with one of the world\'s deepest talent pools in sixes format.',
+    tier: 'gold',
+    reason: 'Canada ranked #1 in the world in both men\'s and women\'s sixes. Won both golds at 2022 World Games. Birthplace of the sport.',
   },
   'Trampoline Gymnastics': {
     tier: 'medal',
@@ -140,13 +142,17 @@ export const CANADA_MEDAL_WATCH: Record<string, CanadaSportProfile> = {
   },
   'Rugby Sevens': {
     tier: 'watch',
-    reason: 'Paris 2024 silver. Men\'s team won 2026 Dubai Sevens. Consistent top-tier program on both sides.',
+    reason: 'Paris 2024 silver. Women\'s team bronze at 2025 SVNS World Championship. Men\'s team rebuilding (won Dubai Sevens 2026).',
+    eventKeywords: [
+      { keyword: "Women's", athlete: 'Canadian Women\'s Sevens — Paris 2024 silver, 2025 SVNS World Championship bronze' },
+      { keyword: "Men's", athlete: 'Canadian Men\'s Sevens — rebuilding, won 2026 Dubai Sevens' },
+    ],
   },
   'Fencing': {
-    tier: 'watch',
-    reason: 'Eleanor Harvey: Paris 2024 bronze (first-ever Canadian fencing medal). Women\'s Foil specialist.',
+    tier: 'medal',
+    reason: 'Eleanor Harvey: Paris 2024 bronze, 5th at 2025 Worlds, first Canadian foil World Cup gold. Best season of her career.',
     eventKeywords: [
-      { keyword: "Women's Foil", athlete: 'Eleanor Harvey — Paris 2024 bronze, Canada\'s first-ever fencing medal' },
+      { keyword: "Women's Foil", athlete: 'Eleanor Harvey — Paris 2024 bronze, 5th at 2025 Worlds, World Cup gold winner' },
     ],
   },
   'Diving': {
@@ -168,7 +174,7 @@ export const CANADA_MEDAL_WATCH: Record<string, CanadaSportProfile> = {
   },
   'Tennis': {
     tier: 'watch',
-    reason: 'Auger-Aliassime Paris 2024 bronze (mixed doubles). Fernandez & Shapovalov also on tour.',
+    reason: 'Auger-Aliassime: Paris 2024 bronze, career-high world #5 (2025), US Open SF. Fernandez #22 WTA. Strong doubles potential.',
   },
   'Cycling Track': {
     tier: 'watch',
@@ -176,6 +182,13 @@ export const CANADA_MEDAL_WATCH: Record<string, CanadaSportProfile> = {
     eventKeywords: [
       { keyword: 'Sprint', athlete: 'Kelsey Mitchell — Tokyo 2020 gold (may return from bobsled for LA 2028)' },
       { keyword: 'Keirin', athlete: 'Canadian track cycling — historically competitive in short events' },
+    ],
+  },
+  'Boxing - Final Stages': {
+    tier: 'watch',
+    reason: 'Wyatt Sanford: Paris 2024 bronze (63.5kg). Canada\'s first boxing medal in 28 years.',
+    eventKeywords: [
+      { keyword: "Men's 65kg", athlete: 'Wyatt Sanford — Paris 2024 bronze (Canada\'s first boxing medal in 28 years)' },
     ],
   },
   'Rowing': {
@@ -208,6 +221,6 @@ export function getCanadaTooltip(sport: string, sessionDescription: string): str
     return `${TIER_CONFIG[profile.tier].label} — ${profile.reason}`
   }
   const match = profile.eventKeywords.find(et => sessionDescription.includes(et.keyword))
-  if (match) return `${TIER_CONFIG[match.athlete ? profile.tier : profile.tier].label} — ${match.athlete}`
+  if (match) return `${TIER_CONFIG[profile.tier].label} — ${match.athlete}`
   return `${TIER_CONFIG[profile.tier].label} — ${profile.reason}`
 }
