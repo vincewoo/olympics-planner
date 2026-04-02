@@ -8,6 +8,7 @@ interface Props {
 
 export function Tooltip({ text, children, className = '' }: Props) {
   const [visible, setVisible] = useState(false)
+  const [placement, setPlacement] = useState<'above' | 'below'>('above')
   const wrapperRef = useRef<HTMLSpanElement>(null)
   const tooltipRef = useRef<HTMLSpanElement>(null)
 
@@ -32,6 +33,20 @@ export function Tooltip({ text, children, className = '' }: Props) {
     const tip = tooltipRef.current
     const rect = tip.getBoundingClientRect()
 
+    // Vertical: flip below if clipped at top
+    if (placement === 'above' && rect.top < 8) {
+      setPlacement('below')
+      return
+    }
+    // If placed below but now there's room above and it's clipped below, flip back
+    if (placement === 'below' && rect.bottom > window.innerHeight - 8) {
+      const wrapperRect = wrapperRef.current.getBoundingClientRect()
+      if (wrapperRect.top - rect.height > 8) {
+        setPlacement('above')
+        return
+      }
+    }
+
     // Horizontal: keep within viewport
     if (rect.right > window.innerWidth - 8) {
       tip.style.left = 'auto'
@@ -42,9 +57,18 @@ export function Tooltip({ text, children, className = '' }: Props) {
       tip.style.right = 'auto'
       tip.style.transform = 'none'
     }
+  }, [visible, placement])
+
+  // Reset placement when tooltip is hidden
+  useEffect(() => {
+    if (!visible) setPlacement('above')
   }, [visible])
 
   const toggle = useCallback(() => setVisible(v => !v), [])
+
+  const positionClasses = placement === 'above'
+    ? 'bottom-full left-1/2 -translate-x-1/2 mb-1.5'
+    : 'top-full left-1/2 -translate-x-1/2 mt-1.5'
 
   return (
     <span
@@ -62,7 +86,7 @@ export function Tooltip({ text, children, className = '' }: Props) {
         <span
           ref={tooltipRef}
           role="tooltip"
-          className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2.5 py-1.5 rounded-lg bg-slate-800 text-white text-xs leading-snug whitespace-pre-line shadow-lg z-50 pointer-events-none max-w-[220px] text-center border border-slate-700"
+          className={`absolute ${positionClasses} px-2.5 py-1.5 rounded-lg bg-slate-800 text-white text-xs leading-snug whitespace-pre-line shadow-lg z-50 pointer-events-none min-w-[200px] max-w-[300px] w-max text-center border border-slate-700`}
         >
           {text}
         </span>

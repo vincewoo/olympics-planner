@@ -3,7 +3,6 @@ import { useState } from 'react'
 import type { OlympicEvent } from '../../types'
 import { DateRangeFilter } from './DateRangeFilter'
 import { CANADA_MEDAL_WATCH, TIER_CONFIG } from '../../data/canadaMedalWatch'
-import { Tooltip } from '../Tooltip/Tooltip'
 
 // Zones that are outside of Southern California
 const OUT_OF_SOCAL_ZONES = new Set([
@@ -100,14 +99,13 @@ function FilterSection({
               >
                 <span className="truncate">{item}</span>
                 {canadaProfile && (
-                  <Tooltip text={`Canada: ${TIER_CONFIG[canadaProfile.tier].label}`} className="shrink-0">
-                    <span
-                      className="text-xs"
-                      style={{ opacity: TIER_CONFIG[canadaProfile.tier].opacity }}
-                    >
-                      🍁
-                    </span>
-                  </Tooltip>
+                  <span
+                    className="shrink-0 text-xs"
+                    aria-label={`Canada: ${TIER_CONFIG[canadaProfile.tier].label}`}
+                    style={{ opacity: TIER_CONFIG[canadaProfile.tier].opacity }}
+                  >
+                    🍁
+                  </span>
                 )}
               </button>
             )
