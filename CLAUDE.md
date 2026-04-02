@@ -66,7 +66,7 @@ src/
 - **Zone grouping** — FilterPanel groups venue zones into "SoCal Venues" and "Other Venues" sections
 - **Medal-only toggle** — `medalOnly` boolean in App state; filters to `sessionType` of `Final` or `Bronze`
 - **Date range filter** — `startDate`/`endDate` strings (`"2028-07-DD"`); `DateRangeFilter` renders a mini calendar with activity-density dots
-- **Canada Medal Watch** — `canadaMedalWatch` boolean filters to athlete-specific events in `src/data/canadaMedalWatch.ts` (not just by sport); each sport/athlete pairing includes keyword matching for precise event targeting; sport chips in the filter sidebar show tier emoji (🥇/🥈/🍁) when enabled; hovering shows athlete names and event details via mobile-friendly tooltips
+- **Canada Medal Watch** — `canadaMedalWatch` boolean filters to athlete-specific events in `src/data/canadaMedalWatch.ts` (not just by sport); each sport/athlete pairing includes keyword matching for precise event targeting; sport chips in the filter sidebar show a maple leaf (🍁) with opacity indicating tier (Gold=100%, Medal=66%, Dark Horse=33%) when enabled; hovering shows athlete names and event details via mobile-friendly tooltips
 - **Watchlist Export/Import** — watchlist data (JSON) can be exported and imported via WatchlistPanel; enables cross-browser sharing and backup of saved events
 - **Mobile-Friendly Tooltips** — custom tooltip component auto-flips placement when clipped at screen edges; accessible on both hover (desktop) and tap (mobile); used for sport tier indicators and athlete/event details
 - **Responsive layout** — sidebar collapses on mobile; filter panel slides in as a sheet; Tabs component adapts for small screens
