@@ -38,7 +38,7 @@ export function CalendarView({ events, watchlistIds, onToggleWatch }: Props) {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Day navigation */}
-      <div className="flex items-center justify-between px-6 py-3 border-b border-slate-200 bg-white shrink-0">
+      <div className="flex items-center justify-between px-3 sm:px-6 py-2 sm:py-3 border-b border-slate-200 bg-white shrink-0">
         <button
           onClick={() => setDayIndex(i => Math.max(0, i - 1))}
           disabled={clampedIndex === 0}
@@ -63,7 +63,7 @@ export function CalendarView({ events, watchlistIds, onToggleWatch }: Props) {
       <div className="flex flex-1 overflow-auto">
         {/* Time gutter */}
         <div
-          className="shrink-0 w-14 bg-[#0d1f3c] relative"
+          className="shrink-0 w-10 sm:w-14 bg-[#0d1f3c] relative"
           style={{ height: TOTAL_HOURS * PX_PER_HOUR }}
         >
           {HOURS.map(h => (

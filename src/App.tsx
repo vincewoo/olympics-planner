@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react'
+import { SlidersHorizontal } from 'lucide-react'
 import rawEvents from './data/schedule.json'
 import type { OlympicEvent } from './types'
 import { useWatchlist } from './hooks/useWatchlist'
@@ -18,6 +19,7 @@ export default function App() {
   const [medalOnly, setMedalOnly] = useState(false)
   const [startDate, setStartDate] = useState<string | null>(null)
   const [endDate, setEndDate] = useState<string | null>(null)
+  const [filterOpen, setFilterOpen] = useState(false)
   const { watchlistIds, toggle } = useWatchlist()
 
   const allSports = useMemo(
@@ -30,6 +32,8 @@ export default function App() {
   )
 
   const filteredEvents = useFilteredEvents(allEvents, selectedSports, selectedZones, medalOnly, startDate, endDate)
+
+  const activeFilterCount = selectedSports.size + selectedZones.size + (medalOnly ? 1 : 0) + (startDate ? 1 : 0)
 
   function toggleSport(sport: string) {
     setSelectedSports(prev => {
@@ -77,11 +81,46 @@ export default function App() {
     setEndDate(null)
   }
 
+  const filterPanelElement = (
+    <FilterPanel
+      allEvents={allEvents}
+      allSports={allSports}
+      allZones={allZones}
+      selectedSports={selectedSports}
+      selectedZones={selectedZones}
+      medalOnly={medalOnly}
+      startDate={startDate}
+      endDate={endDate}
+      onToggleSport={toggleSport}
+      onToggleZone={toggleZone}
+      onToggleMedalOnly={() => setMedalOnly(v => !v)}
+      onSelectDate={selectDate}
+      onClearDates={() => { setStartDate(null); setEndDate(null) }}
+      onClearAll={clearAll}
+      onClose={() => setFilterOpen(false)}
+    />
+  )
+
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-slate-50">
       {/* Header */}
-      <header className="bg-[#0a1628] text-white px-6 py-3 flex items-center justify-between shrink-0 shadow-lg">
-        <div className="flex items-center gap-3">
+      <header className="bg-[#0a1628] text-white px-3 sm:px-6 py-2 sm:py-3 flex items-center justify-between shrink-0 shadow-lg">
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Mobile filter toggle — only on non-watchlist tabs */}
+          {activeTab !== 'watchlist' && (
+            <button
+              onClick={() => setFilterOpen(true)}
+              className="md:hidden relative p-2 -ml-1 rounded-lg hover:bg-white/10 transition-colors"
+              aria-label="Open filters"
+            >
+              <SlidersHorizontal size={18} />
+              {activeFilterCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-blue-500 text-[10px] font-bold rounded-full flex items-center justify-center">
+                  {activeFilterCount}
+                </span>
+              )}
+            </button>
+          )}
           <span className="text-xl font-black tracking-tight">
             LA<span className="text-[#E63329]">28</span>
           </span>
@@ -95,25 +134,21 @@ export default function App() {
 
       {/* Body */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar — hide on watchlist tab */}
+        {/* Desktop sidebar — hide on watchlist tab and mobile */}
         {activeTab !== 'watchlist' && (
-          <FilterPanel
-            allEvents={allEvents}
-            allSports={allSports}
-            allZones={allZones}
-            selectedSports={selectedSports}
-            selectedZones={selectedZones}
-            medalOnly={medalOnly}
-            startDate={startDate}
-            endDate={endDate}
-            onToggleSport={toggleSport}
-            onToggleZone={toggleZone}
-            onToggleMedalOnly={() => setMedalOnly(v => !v)}
-            onSelectDate={selectDate}
-            onClearDates={() => { setStartDate(null); setEndDate(null) }}
-            onClearAll={clearAll}
-          />
+          <div className="hidden md:block">
+            {filterPanelElement}
+          </div>
         )}
+
+        {/* Mobile filter drawer */}
+        <div
+          className={`filter-backdrop md:hidden ${filterOpen ? 'open' : ''}`}
+          onClick={() => setFilterOpen(false)}
+        />
+        <div className={`filter-drawer md:hidden ${filterOpen ? 'open' : ''}`}>
+          {filterPanelElement}
+        </div>
 
         {/* Main content */}
         <main className="flex-1 overflow-auto">

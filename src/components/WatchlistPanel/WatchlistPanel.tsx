@@ -44,7 +44,7 @@ export function WatchlistPanel({ allEvents, watchlistIds, onToggleWatch }: Props
   }
 
   return (
-    <div className="flex flex-col gap-8 px-6 py-6">
+    <div className="flex flex-col gap-5 sm:gap-8 px-3 sm:px-6 py-4 sm:py-6">
       {conflictIds.size > 0 && (
         <div className="rounded-xl bg-orange-50 border border-orange-200 px-4 py-3 text-sm text-orange-800">
           <span className="font-semibold">⚠ Schedule conflicts detected</span> — some saved events overlap on the same day. Consider attending one and watching the other on TV.

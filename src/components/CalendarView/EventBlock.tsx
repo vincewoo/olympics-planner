@@ -81,7 +81,7 @@ export function EventBlock({ event, colIndex, totalCols, isWatched, onToggleWatc
           </span>
           <button
             onClick={e => { e.stopPropagation(); onToggleWatch(event.id) }}
-            className="shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+            className="shrink-0 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
           >
             <Star
               size={10}

@@ -1,3 +1,6 @@
+import { List, CalendarDays, Star } from 'lucide-react'
+import type { ReactNode } from 'react'
+
 export type TabId = 'list' | 'calendar' | 'watchlist'
 
 interface Props {
@@ -6,10 +9,10 @@ interface Props {
   watchlistCount: number
 }
 
-const TABS: { id: TabId; label: string }[] = [
-  { id: 'list', label: 'Schedule' },
-  { id: 'calendar', label: 'Calendar' },
-  { id: 'watchlist', label: 'Watchlist' },
+const TABS: { id: TabId; label: string; icon: ReactNode }[] = [
+  { id: 'list', label: 'Schedule', icon: <List size={16} /> },
+  { id: 'calendar', label: 'Calendar', icon: <CalendarDays size={16} /> },
+  { id: 'watchlist', label: 'Watchlist', icon: <Star size={16} /> },
 ]
 
 export function Tabs({ active, onChange, watchlistCount }: Props) {
@@ -19,15 +22,16 @@ export function Tabs({ active, onChange, watchlistCount }: Props) {
         <button
           key={tab.id}
           onClick={() => onChange(tab.id)}
-          className={`relative px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+          className={`relative flex items-center gap-1.5 px-2.5 sm:px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
             active === tab.id
               ? 'bg-white text-[#0a1628] shadow-sm'
               : 'text-white/70 hover:text-white'
           }`}
         >
-          {tab.label}
+          <span className="sm:hidden">{tab.icon}</span>
+          <span className="hidden sm:inline">{tab.label}</span>
           {tab.id === 'watchlist' && watchlistCount > 0 && (
-            <span className="ml-1.5 text-xs bg-yellow-400 text-[#0a1628] rounded-full px-1.5 py-0.5 font-bold">
+            <span className="text-xs bg-yellow-400 text-[#0a1628] rounded-full px-1.5 py-0.5 font-bold">
               {watchlistCount}
             </span>
           )}

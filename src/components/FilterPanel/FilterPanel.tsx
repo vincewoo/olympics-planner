@@ -28,6 +28,7 @@ interface Props {
   onSelectDate: (date: string) => void
   onClearDates: () => void
   onClearAll: () => void
+  onClose?: () => void
 }
 
 function ZoneButton({
@@ -171,21 +172,33 @@ export function FilterPanel({
   onSelectDate,
   onClearDates,
   onClearAll,
+  onClose,
 }: Props) {
   const hasFilters = selectedSports.size > 0 || selectedZones.size > 0 || medalOnly || startDate !== null
 
   return (
-    <aside className="w-60 shrink-0 bg-[#0d1f3c] flex flex-col h-full overflow-y-auto">
+    <aside className="w-full md:w-60 shrink-0 bg-[#0d1f3c] flex flex-col h-full overflow-y-auto">
       <div className="px-4 py-4 border-b border-slate-700/50 flex items-center justify-between">
         <span className="text-sm font-semibold text-white">Filters</span>
-        {hasFilters && (
-          <button
-            onClick={onClearAll}
-            className="text-xs text-slate-400 hover:text-white flex items-center gap-1 transition-colors"
-          >
-            <X size={12} /> Clear all
-          </button>
-        )}
+        <div className="flex items-center gap-2">
+          {hasFilters && (
+            <button
+              onClick={onClearAll}
+              className="text-xs text-slate-400 hover:text-white flex items-center gap-1 transition-colors"
+            >
+              <X size={12} /> Clear all
+            </button>
+          )}
+          {onClose && (
+            <button
+              onClick={onClose}
+              className="md:hidden text-slate-400 hover:text-white p-1 -mr-1 transition-colors"
+              aria-label="Close filters"
+            >
+              <X size={18} />
+            </button>
+          )}
+        </div>
       </div>
       {hasFilters && (
         <div className="px-4 py-2 flex flex-wrap gap-1 border-b border-slate-700/50">

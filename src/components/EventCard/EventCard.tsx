@@ -58,7 +58,7 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
 
   return (
     <div
-      className="relative flex gap-3 rounded-xl bg-white shadow-sm border border-slate-100 px-4 py-3 hover:shadow-md transition-shadow"
+      className="relative flex gap-2 sm:gap-3 rounded-xl bg-white shadow-sm border border-slate-100 px-3 py-2 sm:px-4 sm:py-3 hover:shadow-md transition-shadow"
       style={{ borderLeftColor: color, borderLeftWidth: 4 }}
     >
       {conflict && (
