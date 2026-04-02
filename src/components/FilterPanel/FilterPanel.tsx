@@ -99,8 +99,12 @@ function FilterSection({
               >
                 <span className="truncate">{item}</span>
                 {canadaProfile && (
-                  <span className="shrink-0 text-xs" title={`Canada: ${TIER_CONFIG[canadaProfile.tier].label}`}>
-                    {TIER_CONFIG[canadaProfile.tier].emoji}
+                  <span
+                    className="shrink-0 text-xs"
+                    title={`Canada: ${TIER_CONFIG[canadaProfile.tier].label}`}
+                    style={{ opacity: TIER_CONFIG[canadaProfile.tier].opacity }}
+                  >
+                    🍁
                   </span>
                 )}
               </button>

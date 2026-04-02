@@ -1,5 +1,6 @@
 import { Star } from 'lucide-react'
 import type { OlympicEvent } from '../../types'
+import { CANADA_MEDAL_WATCH, TIER_CONFIG } from '../../data/canadaMedalWatch'
 
 const SPORT_COLORS: Record<string, string> = {
   'Aquatics': '#0057A8',
@@ -55,6 +56,7 @@ interface Props {
 export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) {
   const color = sportColor(event.sport)
   const isMedalEvent = event.sessionType === 'Final' || event.sessionType === 'Bronze'
+  const canadaProfile = CANADA_MEDAL_WATCH[event.sport]
 
   return (
     <div
@@ -69,11 +71,19 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-2">
           <span
-            className="text-xs font-semibold uppercase tracking-wide"
+            className="text-xs font-semibold uppercase tracking-wide flex items-center gap-1"
             style={{ color }}
           >
-            {isMedalEvent && <span className="mr-1">🏅</span>}
+            {isMedalEvent && <span>🏅</span>}
             {event.sport}
+            {canadaProfile && (
+              <span
+                style={{ opacity: TIER_CONFIG[canadaProfile.tier].opacity }}
+                title={`Canada: ${TIER_CONFIG[canadaProfile.tier].label}`}
+              >
+                🍁
+              </span>
+            )}
           </span>
           <span className="text-xs text-slate-400 shrink-0">
             {event.startTime}–{event.endTime}
