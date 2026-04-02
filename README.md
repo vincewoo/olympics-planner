@@ -14,7 +14,7 @@ A web app to browse, filter, and plan your schedule for the **LA 2028 Olympic Ga
 - **Filter by Sport & Zone** — Sidebar filter panel with sport chips and venue zones grouped into SoCal and Other
 - **Date Range Filter** — Mini calendar picker to narrow the schedule to a specific day or range
 - **Medal Events Toggle** — Show only Finals and Bronze-medal sessions
-- **Canada Medal Watch** — Highlight events where Canada has medal potential with athlete-specific targeting; tier indicators (🥇 Gold Favourite, 🥈 Medal Contender, 🍁 Competitive); hover for athlete names and event details
+- **Canada Medal Watch** — Highlight events where Canada has medal potential with athlete-specific targeting; tier indicators via maple leaf opacity (🍁 Gold Favourite, 🍁 Medal Contender, 🍁 Dark Horse); hover for athlete names and event details
 - **List View** — Browse events chronologically, grouped by date
 - **Calendar View** — Visualize sessions as time blocks on a day-by-day calendar
 - **Watchlist** — Save events you're interested in (persisted in localStorage)

@@ -31,36 +31,43 @@ export function Tooltip({ text, children, className = '' }: Props) {
   useEffect(() => {
     if (!visible || !tooltipRef.current || !wrapperRef.current) return
     const tip = tooltipRef.current
-    const rect = tip.getBoundingClientRect()
 
-    // Vertical: flip below if clipped at top
-    if (placement === 'above' && rect.top < 8) {
-      setPlacement('below')
-      return
-    }
-    // If placed below but now there's room above and it's clipped below, flip back
-    if (placement === 'below' && rect.bottom > window.innerHeight - 8) {
-      const wrapperRect = wrapperRef.current.getBoundingClientRect()
-      if (wrapperRect.top - rect.height > 8) {
-        setPlacement('above')
+    // Use requestAnimationFrame to ensure DOM has been updated with new placement
+    const timeoutId = requestAnimationFrame(() => {
+      const rect = tip.getBoundingClientRect()
+
+      // Vertical: flip below if clipped at top
+      if (placement === 'above' && rect.top < 8) {
+        setPlacement('below')
         return
       }
-    }
+      // If placed below but now there's room above and it's clipped below, flip back
+      if (placement === 'below' && rect.bottom > window.innerHeight - 8) {
+        const wrapperRect = wrapperRef.current!.getBoundingClientRect()
+        if (wrapperRect.top - rect.height > 8) {
+          setPlacement('above')
+          return
+        }
+      }
 
-    // Horizontal: keep within viewport
-    if (rect.right > window.innerWidth - 8) {
-      tip.style.left = 'auto'
-      tip.style.right = '0'
-      tip.style.transform = 'none'
-    } else if (rect.left < 8) {
-      tip.style.left = '0'
-      tip.style.right = 'auto'
-      tip.style.transform = 'none'
-    }
+      // Horizontal: keep within viewport
+      if (rect.right > window.innerWidth - 8) {
+        tip.style.left = 'auto'
+        tip.style.right = '0'
+        tip.style.transform = 'none'
+      } else if (rect.left < 8) {
+        tip.style.left = '0'
+        tip.style.right = 'auto'
+        tip.style.transform = 'none'
+      }
+    })
+
+    return () => cancelAnimationFrame(timeoutId)
   }, [visible, placement])
 
   // Reset placement when tooltip is hidden
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (!visible) setPlacement('above')
   }, [visible])
 

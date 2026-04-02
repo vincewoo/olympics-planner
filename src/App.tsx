@@ -39,7 +39,11 @@ export default function App() {
   function toggleSport(sport: string) {
     setSelectedSports(prev => {
       const next = new Set(prev)
-      next.has(sport) ? next.delete(sport) : next.add(sport)
+      if (next.has(sport)) {
+        next.delete(sport)
+      } else {
+        next.add(sport)
+      }
       return next
     })
   }
@@ -47,7 +51,11 @@ export default function App() {
   function toggleZone(zone: string) {
     setSelectedZones(prev => {
       const next = new Set(prev)
-      next.has(zone) ? next.delete(zone) : next.add(zone)
+      if (next.has(zone)) {
+        next.delete(zone)
+      } else {
+        next.add(zone)
+      }
       return next
     })
   }
