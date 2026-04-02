@@ -221,6 +221,6 @@ export function getCanadaTooltip(sport: string, sessionDescription: string): str
     return `${TIER_CONFIG[profile.tier].label} — ${profile.reason}`
   }
   const match = profile.eventKeywords.find(et => sessionDescription.includes(et.keyword))
-  if (match) return `${TIER_CONFIG[profile.tier].label} — ${match.athlete}`
+  if (match) return `${match.keyword} — ${TIER_CONFIG[profile.tier].label} — ${match.athlete}`
   return `${TIER_CONFIG[profile.tier].label} — ${profile.reason}`
 }
