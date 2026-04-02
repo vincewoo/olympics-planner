@@ -1,73 +1,83 @@
-# React + TypeScript + Vite
+# 🏅 LA28 Olympic Games Planner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web app to browse, filter, and plan your schedule for the **LA 2028 Olympic Games**. Save sessions to your watchlist and view them in list or calendar format.
 
-Currently, two official plugins are available:
+**[Live Demo →](https://vincewoo.github.io/olympics-planner/)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Filter by Sport & Zone** — Narrow down the full schedule using the sidebar filter panel
+- **List View** — Browse events chronologically, grouped by date
+- **Calendar View** — Visualize sessions as time blocks on a day-by-day calendar
+- **Watchlist** — Save events you're interested in (persisted in localStorage)
+- **Responsive** — Works on desktop and mobile
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- [Node.js](https://nodejs.org/) (v20+)
+- npm
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Install & Run
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Install dependencies
+npm install
+
+# Start the dev server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The app will be available at `http://localhost:5173/olympics-planner/`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Other Commands
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build      # Type-check and build for production
+npm run lint       # Run ESLint
+npm run preview    # Preview the production build locally
 ```
+
+## Deployment
+
+The app auto-deploys to **GitHub Pages** on every push to `main` via the [deploy workflow](.github/workflows/deploy.yml).
+
+## Tech Stack
+
+| Layer     | Technology                  |
+| --------- | --------------------------- |
+| Framework | React 19                    |
+| Language  | TypeScript 5.9 (strict)     |
+| Build     | Vite 8                      |
+| Styling   | Tailwind CSS v4             |
+| Icons     | lucide-react                |
+| Hosting   | GitHub Pages                |
+
+## Project Structure
+
+```
+src/
+├── App.tsx              # Root component — layout & tab routing
+├── components/          # UI components (folder-per-component)
+│   ├── CalendarView/    # Day-based calendar with positioned event blocks
+│   ├── EventCard/       # Individual event card
+│   ├── FilterPanel/     # Sport & zone filter sidebar
+│   ├── ListView/        # Chronological list grouped by date
+│   ├── Tabs/            # Tab switcher (List / Calendar / Watchlist)
+│   └── WatchlistPanel/  # Saved events view
+├── data/
+│   └── schedule.json    # Full LA 2028 competition schedule
+├── hooks/               # Custom React hooks
+├── types/               # TypeScript interfaces
+└── utils/               # Date/time helpers
+```
+
+## License
+
+This project is for personal/educational use. Olympic schedule data is sourced from the official LA 2028 competition schedule.

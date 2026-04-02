@@ -54,6 +54,7 @@ interface Props {
 
 export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) {
   const color = sportColor(event.sport)
+  const isMedalEvent = event.sessionType === 'Final' || event.sessionType === 'Bronze'
 
   return (
     <div
@@ -71,6 +72,7 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
             className="text-xs font-semibold uppercase tracking-wide"
             style={{ color }}
           >
+            {isMedalEvent && <span className="mr-1">🏅</span>}
             {event.sport}
           </span>
           <span className="text-xs text-slate-400 shrink-0">
