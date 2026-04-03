@@ -19,7 +19,8 @@ A web app to browse, filter, and plan your schedule for the **LA 2028 Olympic Ga
 - **Session Code Badge** — Each event card displays the session code identifier
 - **Schedule View** — Browse events chronologically, grouped by date
 - **Watchlist** — Save events you're interested in (persisted in localStorage)
-- **Watchlist Export/Import** — Share your saved watchlist across browsers via JSON file
+- **Watchlist Export/Import** — Share your saved watchlist across browsers via JSON data
+- **Shareable Watchlist Links** — Generate a share link for your watchlist; recipients can browse your picks, import everything, or cherry-pick individual events into their own watchlist
 - **Mobile-Friendly Tooltips** — Accessible tooltips with smart positioning on touch devices
 - **Responsive** — Works on desktop and mobile
 
@@ -74,9 +75,10 @@ src/
 │   ├── EventCard/       # Individual event card
 │   ├── FilterPanel/     # Sport & zone filter sidebar, date picker, medal toggles
 │   ├── ListView/        # Chronological list grouped by date
+│   ├── SharedWatchlistView/  # Read-only view for shared watchlist links
 │   ├── Tabs/            # Tab switcher (Schedule / Watchlist)
 │   ├── Tooltip/         # Mobile-friendly tooltip with auto-flip placement
-│   └── WatchlistPanel/  # Saved events view with export/import
+│   └── WatchlistPanel/  # Saved events view with export/import/share link
 ├── data/
 │   ├── schedule.json        # Full LA 2028 competition schedule
 │   └── canadaMedalWatch.ts  # Canada medal-potential profiles by sport

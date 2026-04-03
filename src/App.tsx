@@ -7,12 +7,24 @@ import { useFilteredEvents } from './hooks/useFilteredEvents'
 import { FilterPanel } from './components/FilterPanel/FilterPanel'
 import { ListView } from './components/ListView/ListView'
 import { WatchlistPanel } from './components/WatchlistPanel/WatchlistPanel'
+import { SharedWatchlistView } from './components/SharedWatchlistView/SharedWatchlistView'
 import { Tabs, type TabId } from './components/Tabs/Tabs'
 
 const allEvents = rawEvents as OlympicEvent[]
+const allEventIds = new Set(allEvents.map(e => e.id))
+
+function parseSharedWatchlist(): Set<string> | null {
+  const hash = window.location.hash
+  const prefix = '#watchlist='
+  if (!hash.startsWith(prefix)) return null
+  const ids = hash.slice(prefix.length).split(',').filter(id => allEventIds.has(id))
+  return ids.length > 0 ? new Set(ids) : null
+}
+
+const initialShared = parseSharedWatchlist()
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<TabId>('list')
+  const [activeTab, setActiveTab] = useState<TabId>(initialShared ? 'shared-watchlist' : 'list')
   const [selectedSports, setSelectedSports] = useState<Set<string>>(new Set())
   const [selectedZones, setSelectedZones] = useState<Set<string>>(new Set())
   const [medalOnly, setMedalOnly] = useState(false)
@@ -21,7 +33,14 @@ export default function App() {
   const [startDate, setStartDate] = useState<string | null>(null)
   const [endDate, setEndDate] = useState<string | null>(null)
   const [filterOpen, setFilterOpen] = useState(false)
+  const [sharedIds, setSharedIds] = useState<Set<string> | null>(initialShared)
   const { watchlistIds, toggle, replaceAll, addMany } = useWatchlist()
+
+  function exitSharedView() {
+    setSharedIds(null)
+    setActiveTab('list')
+    history.replaceState(null, '', window.location.pathname + window.location.search)
+  }
 
   const allSports = useMemo(
     () => [...new Set(allEvents.map(e => e.sport))].sort(),
@@ -121,8 +140,8 @@ export default function App() {
       {/* Header */}
       <header className="bg-[#0a1628] text-white px-3 sm:px-6 py-2 sm:py-3 flex items-center justify-between shrink-0 shadow-lg">
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Mobile filter toggle — only on non-watchlist tabs */}
-          {activeTab !== 'watchlist' && (
+          {/* Mobile filter toggle — only on schedule tab */}
+          {activeTab === 'list' && (
             <button
               onClick={() => setFilterOpen(true)}
               className="md:hidden relative p-2 -ml-1 rounded-lg hover:bg-white/10 transition-colors"
@@ -149,8 +168,8 @@ export default function App() {
 
       {/* Body */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Desktop sidebar — hide on watchlist tab and mobile */}
-        {activeTab !== 'watchlist' && (
+        {/* Desktop sidebar — only show on schedule tab */}
+        {activeTab === 'list' && (
           <div className="hidden md:block">
             {filterPanelElement}
           </div>
@@ -181,6 +200,16 @@ export default function App() {
               onToggleWatch={toggle}
               onReplaceWatchlist={replaceAll}
               onAddToWatchlist={addMany}
+            />
+          )}
+          {activeTab === 'shared-watchlist' && sharedIds && (
+            <SharedWatchlistView
+              sharedIds={sharedIds}
+              allEvents={allEvents}
+              watchlistIds={watchlistIds}
+              onToggleWatch={toggle}
+              onAddToWatchlist={addMany}
+              onBack={exitSharedView}
             />
           )}
         </main>

@@ -39,9 +39,10 @@ src/
 │   ├── FilterPanel/     # Sidebar with sport & zone filters, date picker, medal toggles
 │   │   └── DateRangeFilter.tsx  # Mini calendar for selecting a date range; includes weekends-only toggle
 │   ├── ListView/        # Chronological event list grouped by date
-│   ├── Tabs/            # Schedule / Watchlist tab switcher
+│   ├── SharedWatchlistView/  # Read-only view for shared watchlist links (import all or cherry-pick)
+│   ├── Tabs/            # Schedule / Watchlist / Shared Watchlist tab switcher
 │   ├── Tooltip/         # Mobile-friendly tooltip component with auto-flip placement
-│   └── WatchlistPanel/  # Saved events view with export/import functionality
+│   └── WatchlistPanel/  # Saved events view with export/import/share-link functionality
 ├── data/
 │   ├── schedule.json        # Full LA 2028 Olympic schedule (~300KB)
 │   └── canadaMedalWatch.ts  # Canada medal-potential profiles by sport (gold/medal/watch tiers)
@@ -68,6 +69,7 @@ src/
 - **Weekends-only filter** — `weekendsOnly` boolean in App state; filters to Saturday/Sunday sessions; timezone-safe date parsing to avoid off-by-one day errors
 - **Canada Medal Watch** — `canadaMedalWatch` boolean filters to athlete-specific events in `src/data/canadaMedalWatch.ts` (not just by sport); each sport/athlete pairing includes keyword matching for precise event targeting; sport chips in the filter sidebar show a maple leaf (🍁) with opacity indicating tier (Gold=100%, Medal=66%, Dark Horse=33%) when enabled; hovering shows athlete names and event details via mobile-friendly tooltips
 - **Watchlist Export/Import** — watchlist data (JSON) can be exported and imported via WatchlistPanel; enables cross-browser sharing and backup of saved events
+- **Shareable Watchlist Links** — "Share Link" button in WatchlistPanel generates a URL with event IDs in the hash fragment (`#watchlist=ID1,ID2,...`); opening the link shows a `SharedWatchlistView` where recipients can browse shared events, import all at once, or cherry-pick individual events; uses comma-separated raw IDs (not base64) since event IDs are ~5 chars; hash is parsed synchronously at module level (not in useEffect) to avoid lint violations with `react-hooks/set-state-in-effect`; `TabId` type includes `'shared-watchlist'` but the tab is not shown in the tab bar — it's only activated via URL hash
 - **Mobile-Friendly Tooltips** — custom tooltip component auto-flips placement when clipped at screen edges; accessible on both hover (desktop) and tap (mobile); used for sport tier indicators and athlete/event details
 - **Session code badge** — `EventCard` displays `sessionCode` as an identifier badge on each event card
 - **Responsive layout** — sidebar collapses on mobile; filter panel slides in as a sheet; Tabs component adapts for small screens
