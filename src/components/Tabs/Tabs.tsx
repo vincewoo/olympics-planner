@@ -1,7 +1,7 @@
 import { List, Star } from 'lucide-react'
 import type { ReactNode } from 'react'
 
-export type TabId = 'list' | 'watchlist'
+export type TabId = 'list' | 'watchlist' | 'shared-watchlist'
 
 interface Props {
   active: TabId

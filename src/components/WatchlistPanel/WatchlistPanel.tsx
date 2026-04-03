@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Upload, Download, Copy, Check, X } from 'lucide-react'
+import { Upload, Download, Copy, Check, X, Link } from 'lucide-react'
 import type { OlympicEvent } from '../../types'
 import { EventCard } from '../EventCard/EventCard'
 import { groupByDate, formatDate } from '../../utils/groupByDate'
@@ -39,6 +39,7 @@ export function WatchlistPanel({ allEvents, watchlistIds, onToggleWatch, onRepla
   const [importText, setImportText] = useState('')
   const [importError, setImportError] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
+  const [linkCopied, setLinkCopied] = useState(false)
 
   const watchedEvents = allEvents.filter(e => watchlistIds.has(e.id))
   const conflictIds = findConflicts(watchedEvents)
@@ -49,6 +50,15 @@ export function WatchlistPanel({ allEvents, watchlistIds, onToggleWatch, onRepla
     navigator.clipboard.writeText(blob).then(() => {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
+    })
+  }
+
+  function handleShareLink() {
+    const ids = [...watchlistIds].join(',')
+    const url = `${window.location.origin}${window.location.pathname}#watchlist=${ids}`
+    navigator.clipboard.writeText(url).then(() => {
+      setLinkCopied(true)
+      setTimeout(() => setLinkCopied(false), 2000)
     })
   }
 
@@ -90,6 +100,14 @@ export function WatchlistPanel({ allEvents, watchlistIds, onToggleWatch, onRepla
 
   const transferButtons = (
     <div className="flex gap-2">
+      <button
+        onClick={handleShareLink}
+        disabled={watchlistIds.size === 0}
+        className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50 border border-blue-200 px-3 py-1.5 text-xs font-medium text-blue-700 hover:bg-blue-100 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+      >
+        {linkCopied ? <Check size={14} /> : <Link size={14} />}
+        {linkCopied ? 'Link Copied!' : 'Share Link'}
+      </button>
       <button
         onClick={handleExport}
         disabled={watchlistIds.size === 0}
