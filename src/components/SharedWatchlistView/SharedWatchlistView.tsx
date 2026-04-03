@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ArrowLeft, Download, Plus, Check } from 'lucide-react'
+import { ArrowLeft, Download, Check } from 'lucide-react'
 import type { OlympicEvent } from '../../types'
 import { EventCard } from '../EventCard/EventCard'
 import { groupByDate, formatDate } from '../../utils/groupByDate'
@@ -53,9 +53,7 @@ export function SharedWatchlistView({ sharedIds, allEvents, watchlistIds, onTogg
             </p>
             <p className="text-sm text-blue-700">
               Someone shared {sharedEvents.length} event{sharedEvents.length !== 1 ? 's' : ''} with you.
-              {newIds.size > 0 && !importedAll && (
-                <span className="text-blue-500"> {newIds.size} not yet in your watchlist.</span>
-              )}
+              Star any event to add it to your own watchlist.
             </p>
           </div>
           <div className="flex gap-2 shrink-0">
@@ -88,27 +86,14 @@ export function SharedWatchlistView({ sharedIds, allEvents, watchlistIds, onTogg
             {dayEvents
               .slice()
               .sort((a, b) => a.startTime.localeCompare(b.startTime))
-              .map(ev => {
-                const alreadyWatched = watchlistIds.has(ev.id)
-                return (
-                  <div key={ev.id} className="relative">
-                    <EventCard
-                      event={ev}
-                      isWatched={alreadyWatched}
-                      onToggleWatch={onToggleWatch}
-                    />
-                    {!alreadyWatched && (
-                      <button
-                        onClick={() => onToggleWatch(ev.id)}
-                        className="absolute top-2 right-10 inline-flex items-center gap-1 rounded-lg bg-blue-50 border border-blue-200 px-2 py-1 text-xs font-medium text-blue-700 hover:bg-blue-100 transition-colors"
-                      >
-                        <Plus size={12} />
-                        Add
-                      </button>
-                    )}
-                  </div>
-                )
-              })}
+              .map(ev => (
+                <EventCard
+                  key={ev.id}
+                  event={ev}
+                  isWatched={watchlistIds.has(ev.id)}
+                  onToggleWatch={onToggleWatch}
+                />
+              ))}
           </div>
         </section>
       ))}
