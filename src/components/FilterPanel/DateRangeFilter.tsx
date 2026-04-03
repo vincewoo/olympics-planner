@@ -29,9 +29,11 @@ interface Props {
   startDate: string | null
   endDate: string | null
   weekendsOnly: boolean
+  afternoonOnly: boolean
   onSelectDate: (date: string) => void
   onClear: () => void
   onToggleWeekendsOnly: () => void
+  onToggleAfternoonOnly: () => void
 }
 
 export function DateRangeFilter({
@@ -39,9 +41,11 @@ export function DateRangeFilter({
   startDate,
   endDate,
   weekendsOnly,
+  afternoonOnly,
   onSelectDate,
   onClear,
   onToggleWeekendsOnly,
+  onToggleAfternoonOnly,
 }: Props) {
   // Count events per day
   const eventCounts = useMemo(() => {
@@ -95,17 +99,29 @@ export function DateRangeFilter({
         )}
       </div>
 
-      {/* Weekends-only toggle */}
-      <button
-        onClick={onToggleWeekendsOnly}
-        className={`w-full mb-2 text-[11px] font-medium py-1 rounded-md transition-colors ${
-          weekendsOnly
-            ? 'bg-violet-600 text-white'
-            : 'text-slate-400 hover:text-white border border-slate-700 hover:border-slate-500'
-        }`}
-      >
-        Weekends only
-      </button>
+      {/* Time-based toggles */}
+      <div className="flex gap-1.5 mb-2">
+        <button
+          onClick={onToggleWeekendsOnly}
+          className={`flex-1 text-[11px] font-medium py-1 rounded-md transition-colors ${
+            weekendsOnly
+              ? 'bg-violet-600 text-white'
+              : 'text-slate-400 hover:text-white border border-slate-700 hover:border-slate-500'
+          }`}
+        >
+          Weekends only
+        </button>
+        <button
+          onClick={onToggleAfternoonOnly}
+          className={`flex-1 text-[11px] font-medium py-1 rounded-md transition-colors ${
+            afternoonOnly
+              ? 'bg-orange-600 text-white'
+              : 'text-slate-400 hover:text-white border border-slate-700 hover:border-slate-500'
+          }`}
+        >
+          After work
+        </button>
+      </div>
 
       {/* Day-of-week headers */}
       <div className="grid grid-cols-7 gap-0.5 mb-1">
