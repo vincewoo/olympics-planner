@@ -70,7 +70,7 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
       style={{ borderLeftColor: color, borderLeftWidth: 4 }}
     >
       {conflict && (
-        <span className="absolute top-2 right-10 text-xs bg-orange-100 text-orange-700 rounded px-1.5 py-0.5 font-medium">
+        <span className="absolute bottom-2 right-2 text-xs bg-orange-100 text-orange-700 rounded px-1.5 py-0.5 font-medium">
           ⚠ Conflict
         </span>
       )}
