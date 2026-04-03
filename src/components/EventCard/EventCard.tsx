@@ -91,7 +91,7 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
             )}
           </span>
           <span className="text-xs text-slate-400 shrink-0">
-            {event.startTime}–{event.endTime}
+            {event.startTime ? `${event.startTime}–${event.endTime}` : 'TBD'}
           </span>
         </div>
         <p className="text-sm font-medium text-slate-800 mt-0.5 leading-snug whitespace-pre-line">
