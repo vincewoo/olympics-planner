@@ -30,6 +30,7 @@ export default function App() {
   const [medalOnly, setMedalOnly] = useState(false)
   const [canadaMedalWatch, setCanadaMedalWatch] = useState(false)
   const [weekendsOnly, setWeekendsOnly] = useState(false)
+  const [afternoonOnly, setAfternoonOnly] = useState(false)
   const [startDate, setStartDate] = useState<string | null>(null)
   const [endDate, setEndDate] = useState<string | null>(null)
   const [filterOpen, setFilterOpen] = useState(false)
@@ -51,9 +52,9 @@ export default function App() {
     []
   )
 
-  const filteredEvents = useFilteredEvents(allEvents, selectedSports, selectedZones, medalOnly, canadaMedalWatch, startDate, endDate, weekendsOnly)
+  const filteredEvents = useFilteredEvents(allEvents, selectedSports, selectedZones, medalOnly, canadaMedalWatch, startDate, endDate, weekendsOnly, afternoonOnly)
 
-  const activeFilterCount = selectedSports.size + selectedZones.size + (medalOnly ? 1 : 0) + (canadaMedalWatch ? 1 : 0) + (weekendsOnly ? 1 : 0) + (startDate ? 1 : 0)
+  const activeFilterCount = selectedSports.size + selectedZones.size + (medalOnly ? 1 : 0) + (canadaMedalWatch ? 1 : 0) + (weekendsOnly ? 1 : 0) + (afternoonOnly ? 1 : 0) + (startDate ? 1 : 0)
 
   function toggleSport(sport: string) {
     setSelectedSports(prev => {
@@ -107,6 +108,7 @@ export default function App() {
     setMedalOnly(false)
     setCanadaMedalWatch(false)
     setWeekendsOnly(false)
+    setAfternoonOnly(false)
     setStartDate(null)
     setEndDate(null)
   }
@@ -121,6 +123,7 @@ export default function App() {
       medalOnly={medalOnly}
       canadaMedalWatch={canadaMedalWatch}
       weekendsOnly={weekendsOnly}
+      afternoonOnly={afternoonOnly}
       startDate={startDate}
       endDate={endDate}
       onToggleSport={toggleSport}
@@ -128,6 +131,7 @@ export default function App() {
       onToggleMedalOnly={() => setMedalOnly(v => !v)}
       onToggleCanadaMedalWatch={() => setCanadaMedalWatch(v => !v)}
       onToggleWeekendsOnly={() => setWeekendsOnly(v => !v)}
+      onToggleAfternoonOnly={() => setAfternoonOnly(v => !v)}
       onSelectDate={selectDate}
       onClearDates={() => { setStartDate(null); setEndDate(null) }}
       onClearAll={clearAll}
