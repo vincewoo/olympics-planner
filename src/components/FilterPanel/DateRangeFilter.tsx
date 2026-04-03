@@ -109,7 +109,7 @@ export function DateRangeFilter({
               : 'text-slate-400 hover:text-white border border-slate-700 hover:border-slate-500'
           }`}
         >
-          Weekends only
+          Weekends
         </button>
         <button
           onClick={onToggleAfternoonOnly}

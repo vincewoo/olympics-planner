@@ -44,18 +44,16 @@ export function useFilteredEvents(
       const dateOk =
         !startDate ||
         (e.date >= startDate && e.date <= (endDate ?? startDate))
-      const weekendOk = !weekendsOnly || (() => {
-        const [y, m, d] = e.date.split('-').map(Number)
-        const dow = new Date(y, m - 1, d).getDay()
-        return dow === 0 || dow === 6
-      })()
-      const afternoonOk = !afternoonOnly || (() => {
+      const timeOk = (() => {
+        if (!weekendsOnly && !afternoonOnly) return true
         const [y, m, d] = e.date.split('-').map(Number)
         const dow = new Date(y, m - 1, d).getDay()
         const isWeekend = dow === 0 || dow === 6
+        if (weekendsOnly && afternoonOnly) return isWeekend || e.startTime >= '17:00'
+        if (weekendsOnly) return isWeekend
         return !isWeekend && e.startTime >= '17:00'
       })()
-      return sportOk && zoneOk && medalOk && canadaOk && dateOk && weekendOk && afternoonOk
+      return sportOk && zoneOk && medalOk && canadaOk && dateOk && timeOk
     })
   }, [events, selectedSports, selectedZones, medalOnly, canadaMedalWatch, startDate, endDate, weekendsOnly, afternoonOnly])
 }
