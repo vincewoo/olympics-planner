@@ -6,7 +6,6 @@ import { useWatchlist } from './hooks/useWatchlist'
 import { useFilteredEvents } from './hooks/useFilteredEvents'
 import { FilterPanel } from './components/FilterPanel/FilterPanel'
 import { ListView } from './components/ListView/ListView'
-import { CalendarView } from './components/CalendarView/CalendarView'
 import { WatchlistPanel } from './components/WatchlistPanel/WatchlistPanel'
 import { Tabs, type TabId } from './components/Tabs/Tabs'
 
@@ -175,14 +174,7 @@ export default function App() {
               onToggleWatch={toggle}
             />
           )}
-          {activeTab === 'calendar' && (
-            <CalendarView
-              events={filteredEvents}
-              watchlistIds={watchlistIds}
-              onToggleWatch={toggle}
-            />
-          )}
-          {activeTab === 'watchlist' && (
+{activeTab === 'watchlist' && (
             <WatchlistPanel
               allEvents={allEvents}
               watchlistIds={watchlistIds}

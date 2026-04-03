@@ -1,6 +1,6 @@
 # 🏅 LA28 Olympic Games Planner
 
-A web app to browse, filter, and plan your schedule for the **LA 2028 Olympic Games**. Save sessions to your watchlist and view them in list or calendar format.
+A web app to browse, filter, and plan your schedule for the **LA 2028 Olympic Games**. Save sessions to your watchlist and browse them in list format.
 
 **[Live Demo →](https://vincewoo.github.io/olympics-planner/)**
 
@@ -13,10 +13,11 @@ A web app to browse, filter, and plan your schedule for the **LA 2028 Olympic Ga
 
 - **Filter by Sport & Zone** — Sidebar filter panel with sport chips and venue zones grouped into SoCal and Other
 - **Date Range Filter** — Mini calendar picker to narrow the schedule to a specific day or range
+- **Weekends-Only Filter** — Quickly filter to weekend sessions only
 - **Medal Events Toggle** — Show only Finals and Bronze-medal sessions
 - **Canada Medal Watch** — Highlight events where Canada has medal potential with athlete-specific targeting; tier indicators via maple leaf opacity (🍁 Gold Favourite, 🍁 Medal Contender, 🍁 Dark Horse); hover for athlete names and event details
-- **List View** — Browse events chronologically, grouped by date
-- **Calendar View** — Visualize sessions as time blocks on a day-by-day calendar
+- **Session Code Badge** — Each event card displays the session code identifier
+- **Schedule View** — Browse events chronologically, grouped by date
 - **Watchlist** — Save events you're interested in (persisted in localStorage)
 - **Watchlist Export/Import** — Share your saved watchlist across browsers via JSON file
 - **Mobile-Friendly Tooltips** — Accessible tooltips with smart positioning on touch devices
@@ -70,12 +71,12 @@ The app auto-deploys to **GitHub Pages** on every push to `main` via the [deploy
 src/
 ├── App.tsx              # Root component — layout & tab routing
 ├── components/          # UI components (folder-per-component)
-│   ├── CalendarView/    # Day-based calendar with positioned event blocks
 │   ├── EventCard/       # Individual event card
 │   ├── FilterPanel/     # Sport & zone filter sidebar, date picker, medal toggles
 │   ├── ListView/        # Chronological list grouped by date
-│   ├── Tabs/            # Tab switcher (List / Calendar / Watchlist)
-│   └── WatchlistPanel/  # Saved events view
+│   ├── Tabs/            # Tab switcher (Schedule / Watchlist)
+│   ├── Tooltip/         # Mobile-friendly tooltip with auto-flip placement
+│   └── WatchlistPanel/  # Saved events view with export/import
 ├── data/
 │   ├── schedule.json        # Full LA 2028 competition schedule
 │   └── canadaMedalWatch.ts  # Canada medal-potential profiles by sport

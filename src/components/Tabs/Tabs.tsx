@@ -1,7 +1,7 @@
-import { List, CalendarDays, Star } from 'lucide-react'
+import { List, Star } from 'lucide-react'
 import type { ReactNode } from 'react'
 
-export type TabId = 'list' | 'calendar' | 'watchlist'
+export type TabId = 'list' | 'watchlist'
 
 interface Props {
   active: TabId
@@ -11,7 +11,6 @@ interface Props {
 
 const TABS: { id: TabId; label: string; icon: ReactNode }[] = [
   { id: 'list', label: 'Schedule', icon: <List size={16} /> },
-  { id: 'calendar', label: 'Calendar', icon: <CalendarDays size={16} /> },
   { id: 'watchlist', label: 'Watchlist', icon: <Star size={16} /> },
 ]
 
