@@ -53,7 +53,7 @@ export function useFilteredEvents(
         const [y, m, d] = e.date.split('-').map(Number)
         const dow = new Date(y, m - 1, d).getDay()
         const isWeekend = dow === 0 || dow === 6
-        return isWeekend || e.startTime >= '17:00'
+        return !isWeekend && e.startTime >= '17:00'
       })()
       return sportOk && zoneOk && medalOk && canadaOk && dateOk && weekendOk && afternoonOk
     })
