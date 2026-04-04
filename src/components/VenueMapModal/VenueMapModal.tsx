@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { X, MapPinOff, Ticket } from 'lucide-react'
-import { VENUE_MAPS, getSeatMapUrl } from '../../data/venueMapData'
+import { VENUE_MAPS, getSeatMapUrl, CATEGORY_COLORS } from '../../data/venueMapData'
 
 interface Props {
   venue: string
@@ -60,14 +60,21 @@ export function VenueMapModal({ venue, sport, prices, onClose }: Props) {
         {/* Footer — price legend */}
         {prices && (
           <div className="flex flex-wrap items-center gap-1.5 px-4 py-3 border-t border-slate-100">
-            <Ticket size={13} className="text-emerald-600 shrink-0" />
+            <Ticket size={13} className="text-slate-400 shrink-0" />
             {Object.entries(prices)
-              .sort((a, b) => a[1] - b[1])
-              .map(([cat, price]) => (
-                <span key={cat} className="text-xs bg-emerald-50 text-emerald-700 rounded px-2 py-1">
-                  Category {cat} — ${Math.round(price)}
-                </span>
-              ))}
+              .sort((a, b) => a[0].localeCompare(b[0]))
+              .map(([cat, price]) => {
+                const color = CATEGORY_COLORS[cat]
+                return (
+                  <span
+                    key={cat}
+                    className="text-xs font-medium rounded px-2 py-1"
+                    style={color ? { backgroundColor: color.bg, color: color.text } : undefined}
+                  >
+                    {cat} — ${Math.round(price)}
+                  </span>
+                )
+              })}
           </div>
         )}
       </div>

@@ -4,7 +4,7 @@ import type { OlympicEvent } from '../../types'
 import { CANADA_MEDAL_WATCH, TIER_CONFIG, getCanadaTooltip } from '../../data/canadaMedalWatch'
 import { Tooltip } from '../Tooltip/Tooltip'
 import { VenueMapModal } from '../VenueMapModal/VenueMapModal'
-import { getSeatMapUrl } from '../../data/venueMapData'
+import { getSeatMapUrl, CATEGORY_COLORS } from '../../data/venueMapData'
 
 const SPORT_COLORS: Record<string, string> = {
   'Aquatics': '#0057A8',
@@ -129,19 +129,25 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
         </div>
         {event.prices && (
           <div
-            className="flex flex-wrap items-center gap-1 mt-1.5 cursor-pointer rounded px-1 -mx-1 hover:bg-emerald-50/60 transition-colors"
+            className="flex flex-wrap items-center gap-1 mt-1.5 cursor-pointer rounded px-1 -mx-1 hover:bg-slate-50 transition-colors"
             onClick={() => setShowMap(true)}
             title="View venue seating chart"
           >
-            <Ticket size={11} className="text-emerald-600 shrink-0" />
-            <MapPin size={11} className="text-emerald-600 shrink-0" />
+            <Ticket size={11} className="text-slate-400 shrink-0" />
             {Object.entries(event.prices)
-              .sort((a, b) => a[1] - b[1])
-              .map(([cat, price]) => (
-                <span key={cat} className="text-xs bg-emerald-50 text-emerald-700 rounded px-1.5 py-0.5">
-                  {cat} ${Math.round(price)}
-                </span>
-              ))}
+              .sort((a, b) => a[0].localeCompare(b[0]))
+              .map(([cat, price]) => {
+                const color = CATEGORY_COLORS[cat]
+                return (
+                  <span
+                    key={cat}
+                    className="text-xs font-medium rounded px-1.5 py-0.5"
+                    style={color ? { backgroundColor: color.bg, color: color.text } : undefined}
+                  >
+                    {cat} ${Math.round(price)}
+                  </span>
+                )
+              })}
           </div>
         )}
         {showMap && (
