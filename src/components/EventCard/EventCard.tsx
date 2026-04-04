@@ -1,7 +1,9 @@
-import { Star, Ticket } from 'lucide-react'
+import { useState } from 'react'
+import { Star, Ticket, MapPin } from 'lucide-react'
 import type { OlympicEvent } from '../../types'
 import { CANADA_MEDAL_WATCH, TIER_CONFIG, getCanadaTooltip } from '../../data/canadaMedalWatch'
 import { Tooltip } from '../Tooltip/Tooltip'
+import { VenueMapModal } from '../VenueMapModal/VenueMapModal'
 
 const SPORT_COLORS: Record<string, string> = {
   'Aquatics': '#0057A8',
@@ -55,6 +57,7 @@ interface Props {
 }
 
 export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) {
+  const [showMap, setShowMap] = useState(false)
   const color = sportColor(event.sport)
   const isMedalEvent = event.sessionType === 'Final' || event.sessionType === 'Bronze'
   const canadaProfile = CANADA_MEDAL_WATCH[event.sport]
@@ -112,8 +115,13 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
           </span>
         </div>
         {event.prices && (
-          <div className="flex flex-wrap items-center gap-1 mt-1.5">
+          <div
+            className="flex flex-wrap items-center gap-1 mt-1.5 cursor-pointer rounded px-1 -mx-1 hover:bg-emerald-50/60 transition-colors"
+            onClick={() => setShowMap(true)}
+            title="View venue seating chart"
+          >
             <Ticket size={11} className="text-emerald-600 shrink-0" />
+            <MapPin size={11} className="text-emerald-600 shrink-0" />
             {Object.entries(event.prices)
               .sort((a, b) => a[1] - b[1])
               .map(([cat, price]) => (
@@ -122,6 +130,13 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
                 </span>
               ))}
           </div>
+        )}
+        {showMap && (
+          <VenueMapModal
+            venue={event.venue}
+            prices={event.prices}
+            onClose={() => setShowMap(false)}
+          />
         )}
       </div>
       <button
