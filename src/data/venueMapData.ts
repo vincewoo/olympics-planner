@@ -173,7 +173,7 @@ export const VENUE_MAPS: Record<string, VenueMapInfo> = {
   },
   'Long Beach Climbing Theater': {
     sportMaps: {
-      // 'Climbing': '',
+      'Climbing': 'Long_Beach_Climbing_Theater_Sport_Climbing.png',
     },
   },
   'Long Beach Target Shooting Hall': {

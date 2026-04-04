@@ -4,6 +4,7 @@ import type { OlympicEvent } from '../../types'
 import { CANADA_MEDAL_WATCH, TIER_CONFIG, getCanadaTooltip } from '../../data/canadaMedalWatch'
 import { Tooltip } from '../Tooltip/Tooltip'
 import { VenueMapModal } from '../VenueMapModal/VenueMapModal'
+import { getSeatMapUrl } from '../../data/venueMapData'
 
 const SPORT_COLORS: Record<string, string> = {
   'Aquatics': '#0057A8',
@@ -59,6 +60,7 @@ interface Props {
 export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) {
   const [showMap, setShowMap] = useState(false)
   const color = sportColor(event.sport)
+  const hasSeatMap = !!getSeatMapUrl(event.venue, event.sport)
   const isMedalEvent = event.sessionType === 'Final' || event.sessionType === 'Bronze'
   const canadaProfile = CANADA_MEDAL_WATCH[event.sport]
   // Only show the maple leaf if this specific session matches a Canada keyword (or the sport has no keywords)
@@ -110,9 +112,20 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
           <span className="text-xs bg-slate-100 text-slate-600 rounded-full px-2 py-0.5">
             {event.zone}
           </span>
-          <span className="text-xs text-slate-400 px-1">
-            {event.venue}
-          </span>
+          {hasSeatMap ? (
+            <button
+              onClick={() => setShowMap(true)}
+              className="text-xs text-slate-400 px-1 hover:text-emerald-600 flex items-center gap-0.5 transition-colors"
+              title="View seating chart"
+            >
+              <MapPin size={11} />
+              {event.venue}
+            </button>
+          ) : (
+            <span className="text-xs text-slate-400 px-1">
+              {event.venue}
+            </span>
+          )}
         </div>
         {event.prices && (
           <div
