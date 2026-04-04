@@ -142,7 +142,7 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
                   <span
                     key={cat}
                     className="text-xs font-medium rounded px-1.5 py-0.5"
-                    style={color ? { backgroundColor: color.bg, color: color.text } : undefined}
+                    style={color ? { backgroundColor: color.dimBg, color: color.dimText } : undefined}
                   >
                     {cat} ${Math.round(price)}
                   </span>

@@ -250,17 +250,17 @@ export const VENUE_MAPS: Record<string, VenueMapInfo> = {
 }
 
 /** LA28 ticket category colors, in legend order */
-export const CATEGORY_COLORS: Record<string, { bg: string; text: string }> = {
-  A: { bg: '#00A651', text: '#fff' },
-  B: { bg: '#E4007C', text: '#fff' },
-  C: { bg: '#009FDA', text: '#fff' },
-  D: { bg: '#FFD100', text: '#000' },
-  E: { bg: '#7B2D8B', text: '#fff' },
-  F: { bg: '#00B5AD', text: '#fff' },
-  G: { bg: '#F47920', text: '#fff' },
-  H: { bg: '#B0B7BC', text: '#000' },
-  I: { bg: '#F2A0C1', text: '#000' },
-  J: { bg: '#C8102E', text: '#fff' },
+export const CATEGORY_COLORS: Record<string, { bg: string; dimBg: string; vibrantText: string; dimText: string }> = {
+  A: { bg: '#00A651', dimBg: 'rgba(0,166,81,0.15)',    vibrantText: '#fff', dimText: '#007a3c' },
+  B: { bg: '#E4007C', dimBg: 'rgba(228,0,124,0.15)',   vibrantText: '#fff', dimText: '#b3005f' },
+  C: { bg: '#009FDA', dimBg: 'rgba(0,159,218,0.15)',   vibrantText: '#fff', dimText: '#0077a3' },
+  D: { bg: '#FFD100', dimBg: 'rgba(255,209,0,0.2)',    vibrantText: '#000', dimText: '#7a6300' },
+  E: { bg: '#7B2D8B', dimBg: 'rgba(123,45,139,0.15)',  vibrantText: '#fff', dimText: '#5a1f68' },
+  F: { bg: '#00B5AD', dimBg: 'rgba(0,181,173,0.15)',   vibrantText: '#fff', dimText: '#007a76' },
+  G: { bg: '#F47920', dimBg: 'rgba(244,121,32,0.15)',  vibrantText: '#fff', dimText: '#b85200' },
+  H: { bg: '#B0B7BC', dimBg: 'rgba(176,183,188,0.25)', vibrantText: '#000', dimText: '#4a5568' },
+  I: { bg: '#F2A0C1', dimBg: 'rgba(242,160,193,0.25)', vibrantText: '#000', dimText: '#9d3366' },
+  J: { bg: '#C8102E', dimBg: 'rgba(200,16,46,0.15)',   vibrantText: '#fff', dimText: '#8f000f' },
 }
 
 /** Get the seatmap image URL for a venue + sport combo, or undefined if not available */

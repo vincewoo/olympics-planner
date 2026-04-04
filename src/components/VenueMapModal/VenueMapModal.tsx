@@ -69,7 +69,7 @@ export function VenueMapModal({ venue, sport, prices, onClose }: Props) {
                   <span
                     key={cat}
                     className="text-xs font-medium rounded px-2 py-1"
-                    style={color ? { backgroundColor: color.bg, color: color.text } : undefined}
+                    style={color ? { backgroundColor: color.bg, color: color.vibrantText } : undefined}
                   >
                     {cat} — ${Math.round(price)}
                   </span>
