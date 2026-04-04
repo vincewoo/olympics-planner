@@ -258,7 +258,7 @@ export const CATEGORY_COLORS: Record<string, { bg: string; dimBg: string; vibran
   E: { bg: '#7B2D8B', dimBg: 'rgba(123,45,139,0.15)',  vibrantText: '#fff', dimText: '#5a1f68' },
   F: { bg: '#00B5AD', dimBg: 'rgba(0,181,173,0.15)',   vibrantText: '#fff', dimText: '#007a76' },
   G: { bg: '#F47920', dimBg: 'rgba(244,121,32,0.15)',  vibrantText: '#fff', dimText: '#b85200' },
-  H: { bg: '#B0B7BC', dimBg: 'rgba(176,183,188,0.25)', vibrantText: '#000', dimText: '#4a5568' },
+  H: { bg: '#00B2E3', dimBg: 'rgba(0,178,227,0.15)',   vibrantText: '#fff', dimText: '#006f9e' },
   I: { bg: '#F2A0C1', dimBg: 'rgba(242,160,193,0.25)', vibrantText: '#000', dimText: '#9d3366' },
   J: { bg: '#C8102E', dimBg: 'rgba(200,16,46,0.15)',   vibrantText: '#fff', dimText: '#8f000f' },
 }
