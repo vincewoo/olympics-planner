@@ -117,11 +117,9 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
             {Object.entries(event.prices)
               .sort((a, b) => a[1] - b[1])
               .map(([cat, price]) => (
-                <Tooltip key={cat} text={`Category ${cat}`}>
-                  <span className="text-xs bg-emerald-50 text-emerald-700 rounded px-1.5 py-0.5 cursor-default">
-                    ${Math.round(price)}
-                  </span>
-                </Tooltip>
+                <span key={cat} className="text-xs bg-emerald-50 text-emerald-700 rounded px-1.5 py-0.5">
+                  {cat} ${Math.round(price)}
+                </span>
               ))}
           </div>
         )}
