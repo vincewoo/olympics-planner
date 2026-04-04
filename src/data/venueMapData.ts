@@ -153,7 +153,7 @@ export const VENUE_MAPS: Record<string, VenueMapInfo> = {
   },
   'Columbus Stadium': {
     sportMaps: {
-      // 'Football (Soccer)': '',
+      'Football (Soccer)': 'Columbus_Stadium_Football.png',
     },
   },
   'Comcast Squash Center at Universal Studios': {
@@ -178,17 +178,17 @@ export const VENUE_MAPS: Record<string, VenueMapInfo> = {
   },
   'Long Beach Target Shooting Hall': {
     sportMaps: {
-      // 'Shooting (Rifle & Pistol)': '',
+      'Shooting (Rifle & Pistol)': 'Long_Beach_Target_Shooting.png',
     },
   },
   'Nashville Stadium': {
     sportMaps: {
-      // 'Football (Soccer)': '',
+      'Football (Soccer)': 'Nashville_Stadium_Football.png',
     },
   },
   'New York Stadium': {
     sportMaps: {
-      // 'Football (Soccer)': '',
+      'Football (Soccer)': 'New_York_Stadium_Football_Soccer.png',
     },
   },
   'Port of Los Angeles': {
@@ -203,22 +203,22 @@ export const VENUE_MAPS: Record<string, VenueMapInfo> = {
   },
   'Rose Bowl Stadium': {
     sportMaps: {
-      // 'Football (Soccer)': '',
+      'Football (Soccer)': 'Rose_Bowl_Stadium_Football_Soccer_Final.png',
     },
   },
   'San Diego Stadium': {
     sportMaps: {
-      // 'Football (Soccer)': '',
+      'Football (Soccer)': 'San_Diego_Stadium_Football_Soccer.png',
     },
   },
   'San José Stadium': {
     sportMaps: {
-      // 'Football (Soccer)': '',
+      'Football (Soccer)': 'San_Jose_Stadium_Football.png',
     },
   },
   'St. Louis Stadium': {
     sportMaps: {
-      // 'Football (Soccer)': '',
+      'Football (Soccer)': 'St_Louis_Stadium_Football.png',
     },
   },
   'Trestles State Beach': {
@@ -228,7 +228,7 @@ export const VENUE_MAPS: Record<string, VenueMapInfo> = {
   },
   'Valley Complex 3': {
     sportMaps: {
-      // '3x3 Basketball': '',
+      '3x3 Basketball': 'VALLEY_COMPLEX_3_3x3_Basketball.png',
     },
   },
   'Venice Beach': {
@@ -244,7 +244,7 @@ export const VENUE_MAPS: Record<string, VenueMapInfo> = {
   },
   'Whittier Narrows Clay Shooting Center': {
     sportMaps: {
-      // 'Shooting (Shotgun)': '',
+      'Shooting (Shotgun)': 'Whittier_Narrows_Shotgun_Shooting.png',
     },
   },
 }
