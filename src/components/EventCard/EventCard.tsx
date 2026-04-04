@@ -1,4 +1,4 @@
-import { Star } from 'lucide-react'
+import { Star, Ticket } from 'lucide-react'
 import type { OlympicEvent } from '../../types'
 import { CANADA_MEDAL_WATCH, TIER_CONFIG, getCanadaTooltip } from '../../data/canadaMedalWatch'
 import { Tooltip } from '../Tooltip/Tooltip'
@@ -111,6 +111,20 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
             {event.venue}
           </span>
         </div>
+        {event.prices && (
+          <div className="flex flex-wrap items-center gap-1 mt-1.5">
+            <Ticket size={11} className="text-emerald-600 shrink-0" />
+            {Object.entries(event.prices)
+              .sort((a, b) => a[1] - b[1])
+              .map(([cat, price]) => (
+                <Tooltip key={cat} text={`Category ${cat}`}>
+                  <span className="text-xs bg-emerald-50 text-emerald-700 rounded px-1.5 py-0.5 cursor-default">
+                    ${Math.round(price)}
+                  </span>
+                </Tooltip>
+              ))}
+          </div>
+        )}
       </div>
       <button
         onClick={() => onToggleWatch(event.id)}

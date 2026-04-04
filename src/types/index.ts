@@ -10,4 +10,5 @@ export interface OlympicEvent {
   sessionDescription: string;
   startTime: string;       // "HH:MM"
   endTime: string;         // "HH:MM"
+  prices?: Record<string, number>; // e.g. { "A": 514.72, "B": 279.07 } — Category A is most expensive
 }
