@@ -1,16 +1,18 @@
 import { useEffect } from 'react'
 import { X, MapPinOff, Ticket } from 'lucide-react'
-import { VENUE_MAPS } from '../../data/venueMapData'
+import { VENUE_MAPS, getSeatMapUrl } from '../../data/venueMapData'
 
 interface Props {
   venue: string
+  sport: string
   prices?: Record<string, number>
   onClose: () => void
 }
 
-export function VenueMapModal({ venue, prices, onClose }: Props) {
+export function VenueMapModal({ venue, sport, prices, onClose }: Props) {
   const mapInfo = VENUE_MAPS[venue]
   const displayName = mapInfo?.altName ?? venue
+  const seatMapUrl = getSeatMapUrl(venue, sport)
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -40,9 +42,9 @@ export function VenueMapModal({ venue, prices, onClose }: Props) {
 
         {/* Body */}
         <div className="flex-1 overflow-y-auto p-4">
-          {mapInfo ? (
+          {seatMapUrl ? (
             <img
-              src={`${import.meta.env.BASE_URL}venue-maps/${mapInfo.imageFile}`}
+              src={seatMapUrl}
               alt={`${displayName} seating chart`}
               className="w-full object-contain rounded-lg"
               loading="lazy"

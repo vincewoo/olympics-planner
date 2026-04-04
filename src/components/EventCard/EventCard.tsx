@@ -134,6 +134,7 @@ export function EventCard({ event, isWatched, onToggleWatch, conflict }: Props) 
         {showMap && (
           <VenueMapModal
             venue={event.venue}
+            sport={event.sport}
             prices={event.prices}
             onClose={() => setShowMap(false)}
           />
