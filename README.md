@@ -16,6 +16,8 @@ A web app to browse, filter, and plan your schedule for the **LA 2028 Olympic Ga
 - **Weekends-Only Filter** — Quickly filter to weekend sessions only
 - **Medal Events Toggle** — Show only Finals and Bronze-medal sessions
 - **Canada Medal Watch** — Highlight events where Canada has medal potential with athlete-specific targeting; tier indicators via maple leaf opacity (🍁 Gold Favourite, 🍁 Medal Contender, 🍁 Dark Horse); hover for athlete names and event details
+- **Venue Seat Maps** — Click any venue name (shown with a map pin icon) to open the official LA28 seating chart in a modal overlay
+- **Ticket Pricing** — Color-coded price badges per event using the LA28 category color system (A–J); muted on event cards, vibrant in the seat map modal to match the legend
 - **Session Code Badge** — Each event card displays the session code identifier
 - **Schedule View** — Browse events chronologically, grouped by date
 - **Watchlist** — Save events you're interested in (persisted in localStorage)
@@ -72,16 +74,18 @@ The app auto-deploys to **GitHub Pages** on every push to `main` via the [deploy
 src/
 ├── App.tsx              # Root component — layout & tab routing
 ├── components/          # UI components (folder-per-component)
-│   ├── EventCard/       # Individual event card
+│   ├── EventCard/       # Individual event card (price badges, seat map trigger)
 │   ├── FilterPanel/     # Sport & zone filter sidebar, date picker, medal toggles
 │   ├── ListView/        # Chronological list grouped by date
 │   ├── SharedWatchlistView/  # Read-only view for shared watchlist links
 │   ├── Tabs/            # Tab switcher (Schedule / Watchlist)
 │   ├── Tooltip/         # Mobile-friendly tooltip with auto-flip placement
+│   ├── VenueMapModal/   # Seat map modal with official LA28 image + price legend
 │   └── WatchlistPanel/  # Saved events view with export/import/share link
 ├── data/
-│   ├── schedule.json        # Full LA 2028 competition schedule
-│   └── canadaMedalWatch.ts  # Canada medal-potential profiles by sport
+│   ├── schedule.json        # Full LA 2028 competition schedule (includes ticket prices)
+│   ├── canadaMedalWatch.ts  # Canada medal-potential profiles by sport
+│   └── venueMapData.ts      # Venue seat map registry + LA28 category color constants
 ├── hooks/               # Custom React hooks
 ├── types/               # TypeScript interfaces
 └── utils/               # Date/time helpers
