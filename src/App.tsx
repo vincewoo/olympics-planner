@@ -208,7 +208,9 @@ export default function App() {
           </span>
           <span className="text-sm text-white/60 hidden sm:block">Olympic Games Planner</span>
         </div>
-        <Tabs active={activeTab} onChange={setActiveTab} watchlistCount={watchlistIds.size} />
+        <div className={activeTab !== 'shared-watchlist' ? 'xl:hidden' : ''}>
+          <Tabs active={activeTab} onChange={setActiveTab} watchlistCount={watchlistIds.size} />
+        </div>
         <div className="text-xs text-white/40 hidden md:block">
           {filteredEvents.length} of {allEvents.length} sessions
         </div>
@@ -216,9 +218,9 @@ export default function App() {
 
       {/* Body */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Desktop sidebar — only show on schedule tab */}
-        {activeTab === 'list' && (
-          <div className="hidden md:block">
+        {/* Desktop sidebar — show on schedule tab (md+), or always on xl+ side-by-side */}
+        {activeTab !== 'shared-watchlist' && (
+          <div className={`hidden ${activeTab === 'list' ? 'md:block' : ''} xl:block`}>
             {filterPanelElement}
           </div>
         )}
@@ -232,25 +234,9 @@ export default function App() {
           {filterPanelElement}
         </div>
 
-        {/* Main content */}
-        <main className="flex-1 overflow-auto">
-          {activeTab === 'list' && (
-            <ListView
-              events={filteredEvents}
-              watchlistIds={watchlistIds}
-              onToggleWatch={toggle}
-            />
-          )}
-{activeTab === 'watchlist' && (
-            <WatchlistPanel
-              allEvents={allEvents}
-              watchlistIds={watchlistIds}
-              onToggleWatch={toggle}
-              onReplaceWatchlist={replaceAll}
-              onAddToWatchlist={addMany}
-            />
-          )}
-          {activeTab === 'shared-watchlist' && sharedIds && (
+        {/* Shared watchlist: always full width */}
+        {activeTab === 'shared-watchlist' && sharedIds && (
+          <main className="flex-1 overflow-auto">
             <SharedWatchlistView
               sharedIds={sharedIds}
               allEvents={allEvents}
@@ -259,8 +245,53 @@ export default function App() {
               onAddToWatchlist={addMany}
               onBack={exitSharedView}
             />
-          )}
-        </main>
+          </main>
+        )}
+
+        {/* Non-shared: tab-based on <xl, side-by-side on xl+ */}
+        {activeTab !== 'shared-watchlist' && (
+          <>
+            {/* Tab-based layout for md and below */}
+            <main className="flex-1 overflow-auto xl:hidden">
+              {activeTab === 'list' && (
+                <ListView
+                  events={filteredEvents}
+                  watchlistIds={watchlistIds}
+                  onToggleWatch={toggle}
+                />
+              )}
+              {activeTab === 'watchlist' && (
+                <WatchlistPanel
+                  allEvents={allEvents}
+                  watchlistIds={watchlistIds}
+                  onToggleWatch={toggle}
+                  onReplaceWatchlist={replaceAll}
+                  onAddToWatchlist={addMany}
+                />
+              )}
+            </main>
+
+            {/* Side-by-side layout for xl+ */}
+            <div className="hidden xl:flex flex-1 overflow-hidden">
+              <div className="flex-1 overflow-auto min-w-0">
+                <ListView
+                  events={filteredEvents}
+                  watchlistIds={watchlistIds}
+                  onToggleWatch={toggle}
+                />
+              </div>
+              <div className="w-96 shrink-0 border-l border-slate-200 overflow-auto bg-white">
+                <WatchlistPanel
+                  allEvents={allEvents}
+                  watchlistIds={watchlistIds}
+                  onToggleWatch={toggle}
+                  onReplaceWatchlist={replaceAll}
+                  onAddToWatchlist={addMany}
+                />
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )
