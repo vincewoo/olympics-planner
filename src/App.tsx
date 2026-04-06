@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { SlidersHorizontal } from 'lucide-react'
+import { SlidersHorizontal, Columns2 } from 'lucide-react'
 import rawEvents from './data/schedule.json'
 import type { OlympicEvent } from './types'
 import { useWatchlist } from './hooks/useWatchlist'
@@ -63,6 +63,7 @@ export default function App() {
   const [startDate, setStartDate] = useState<string | null>(initialFilters?.start ?? null)
   const [endDate, setEndDate] = useState<string | null>(initialFilters?.end ?? null)
   const [filterOpen, setFilterOpen] = useState(false)
+  const [splitView, setSplitView] = useState(true)
   const [sharedIds, setSharedIds] = useState<Set<string> | null>(initialShared)
   const { watchlistIds, toggle, replaceAll, addMany } = useWatchlist()
 
@@ -208,11 +209,23 @@ export default function App() {
           </span>
           <span className="text-sm text-white/60 hidden sm:block">Olympic Games Planner</span>
         </div>
-        <div className={activeTab !== 'shared-watchlist' ? 'xl:hidden' : ''}>
+        <div className={activeTab !== 'shared-watchlist' && splitView ? 'xl:hidden' : ''}>
           <Tabs active={activeTab} onChange={setActiveTab} watchlistCount={watchlistIds.size} />
         </div>
-        <div className="text-xs text-white/40 hidden md:block">
-          {filteredEvents.length} of {allEvents.length} sessions
+        <div className="flex items-center gap-2">
+          {activeTab !== 'shared-watchlist' && (
+            <button
+              onClick={() => setSplitView(v => !v)}
+              className={`hidden xl:flex items-center p-1.5 rounded-md transition-colors ${splitView ? 'bg-white/20 text-white' : 'text-white/40 hover:text-white hover:bg-white/10'}`}
+              aria-label={splitView ? 'Switch to single panel' : 'Switch to split view'}
+              title={splitView ? 'Switch to single panel' : 'Switch to split view'}
+            >
+              <Columns2 size={16} />
+            </button>
+          )}
+          <div className="text-xs text-white/40 hidden md:block">
+            {filteredEvents.length} of {allEvents.length} sessions
+          </div>
         </div>
       </header>
 
@@ -220,7 +233,7 @@ export default function App() {
       <div className="flex flex-1 overflow-hidden">
         {/* Desktop sidebar — show on schedule tab (md+), or always on xl+ side-by-side */}
         {activeTab !== 'shared-watchlist' && (
-          <div className={`hidden ${activeTab === 'list' ? 'md:block' : ''} xl:block`}>
+          <div className={`hidden ${activeTab === 'list' ? 'md:block' : ''} ${splitView ? 'xl:block' : ''}`}>
             {filterPanelElement}
           </div>
         )}
@@ -251,8 +264,8 @@ export default function App() {
         {/* Non-shared: tab-based on <xl, side-by-side on xl+ */}
         {activeTab !== 'shared-watchlist' && (
           <>
-            {/* Tab-based layout for md and below */}
-            <main className="flex-1 overflow-auto xl:hidden">
+            {/* Tab-based layout for md and below (and xl when split view is off) */}
+            <main className={`flex-1 overflow-auto ${splitView ? 'xl:hidden' : ''}`}>
               {activeTab === 'list' && (
                 <ListView
                   events={filteredEvents}
@@ -271,8 +284,8 @@ export default function App() {
               )}
             </main>
 
-            {/* Side-by-side layout for xl+ */}
-            <div className="hidden xl:flex flex-1 overflow-hidden">
+            {/* Side-by-side layout for xl+ (when split view is on) */}
+            <div className={`${splitView ? 'hidden xl:flex' : 'hidden'} flex-1 overflow-hidden`}>
               <div className="flex-1 overflow-auto min-w-0">
                 <ListView
                   events={filteredEvents}
