@@ -1,4 +1,4 @@
-import { X, ChevronDown, ChevronUp } from 'lucide-react'
+import { X, ChevronDown, ChevronUp, Link } from 'lucide-react'
 import { useState } from 'react'
 import type { OlympicEvent } from '../../types'
 import { DateRangeFilter } from './DateRangeFilter'
@@ -35,6 +35,7 @@ interface Props {
   onSelectDate: (date: string) => void
   onClearDates: () => void
   onClearAll: () => void
+  onShareFilters: () => void
   onClose?: () => void
 }
 
@@ -197,9 +198,17 @@ export function FilterPanel({
   onSelectDate,
   onClearDates,
   onClearAll,
+  onShareFilters,
   onClose,
 }: Props) {
+  const [linkCopied, setLinkCopied] = useState(false)
   const hasFilters = selectedSports.size > 0 || selectedZones.size > 0 || medalOnly || canadaMedalWatch || weekendsOnly || afternoonOnly || startDate !== null
+
+  function handleShareFilters() {
+    onShareFilters()
+    setLinkCopied(true)
+    setTimeout(() => setLinkCopied(false), 2000)
+  }
 
   return (
     <aside className="w-full md:w-60 shrink-0 bg-[#0d1f3c] flex flex-col h-full">
@@ -207,12 +216,22 @@ export function FilterPanel({
         <span className="text-sm font-semibold text-white">Filters</span>
         <div className="flex items-center gap-2">
           {hasFilters && (
-            <button
-              onClick={onClearAll}
-              className="text-xs text-slate-400 hover:text-white flex items-center gap-1 transition-colors"
-            >
-              <X size={12} /> Clear all
-            </button>
+            <>
+              <button
+                onClick={handleShareFilters}
+                className="text-xs text-slate-400 hover:text-white flex items-center gap-1 transition-colors"
+                title="Copy shareable filter link"
+              >
+                <Link size={12} />
+                {linkCopied ? 'Copied!' : 'Share'}
+              </button>
+              <button
+                onClick={onClearAll}
+                className="text-xs text-slate-400 hover:text-white flex items-center gap-1 transition-colors"
+              >
+                <X size={12} /> Clear all
+              </button>
+            </>
           )}
           {onClose && (
             <button

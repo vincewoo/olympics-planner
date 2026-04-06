@@ -21,18 +21,47 @@ function parseSharedWatchlist(): Set<string> | null {
   return ids.length > 0 ? new Set(ids) : null
 }
 
+interface SharedFilters {
+  sports: string[]
+  zones: string[]
+  medals: boolean
+  canada: boolean
+  weekends: boolean
+  afternoon: boolean
+  start: string | null
+  end: string | null
+}
+
+function parseSharedFilters(): SharedFilters | null {
+  const hash = window.location.hash
+  const prefix = '#filters?'
+  if (!hash.startsWith(prefix)) return null
+  const params = new URLSearchParams(hash.slice(prefix.length))
+  const sports = params.get('sports')?.split(',').filter(Boolean) ?? []
+  const zones = params.get('zones')?.split(',').filter(Boolean) ?? []
+  const medals = params.get('medals') === '1'
+  const canada = params.get('canada') === '1'
+  const weekends = params.get('weekends') === '1'
+  const afternoon = params.get('afternoon') === '1'
+  const start = params.get('start') || null
+  const end = params.get('end') || null
+  const hasAny = sports.length > 0 || zones.length > 0 || medals || canada || weekends || afternoon || start !== null
+  return hasAny ? { sports, zones, medals, canada, weekends, afternoon, start, end } : null
+}
+
 const initialShared = parseSharedWatchlist()
+const initialFilters = parseSharedFilters()
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId>(initialShared ? 'shared-watchlist' : 'list')
-  const [selectedSports, setSelectedSports] = useState<Set<string>>(new Set())
-  const [selectedZones, setSelectedZones] = useState<Set<string>>(new Set())
-  const [medalOnly, setMedalOnly] = useState(false)
-  const [canadaMedalWatch, setCanadaMedalWatch] = useState(false)
-  const [weekendsOnly, setWeekendsOnly] = useState(false)
-  const [afternoonOnly, setAfternoonOnly] = useState(false)
-  const [startDate, setStartDate] = useState<string | null>(null)
-  const [endDate, setEndDate] = useState<string | null>(null)
+  const [selectedSports, setSelectedSports] = useState<Set<string>>(new Set(initialFilters?.sports ?? []))
+  const [selectedZones, setSelectedZones] = useState<Set<string>>(new Set(initialFilters?.zones ?? []))
+  const [medalOnly, setMedalOnly] = useState(initialFilters?.medals ?? false)
+  const [canadaMedalWatch, setCanadaMedalWatch] = useState(initialFilters?.canada ?? false)
+  const [weekendsOnly, setWeekendsOnly] = useState(initialFilters?.weekends ?? false)
+  const [afternoonOnly, setAfternoonOnly] = useState(initialFilters?.afternoon ?? false)
+  const [startDate, setStartDate] = useState<string | null>(initialFilters?.start ?? null)
+  const [endDate, setEndDate] = useState<string | null>(initialFilters?.end ?? null)
   const [filterOpen, setFilterOpen] = useState(false)
   const [sharedIds, setSharedIds] = useState<Set<string> | null>(initialShared)
   const { watchlistIds, toggle, replaceAll, addMany } = useWatchlist()
@@ -102,6 +131,20 @@ export default function App() {
     }
   }
 
+  function shareFilters() {
+    const params = new URLSearchParams()
+    if (selectedSports.size > 0) params.set('sports', [...selectedSports].join(','))
+    if (selectedZones.size > 0) params.set('zones', [...selectedZones].join(','))
+    if (medalOnly) params.set('medals', '1')
+    if (canadaMedalWatch) params.set('canada', '1')
+    if (weekendsOnly) params.set('weekends', '1')
+    if (afternoonOnly) params.set('afternoon', '1')
+    if (startDate) params.set('start', startDate)
+    if (endDate) params.set('end', endDate)
+    const url = `${window.location.origin}${window.location.pathname}#filters?${params.toString()}`
+    navigator.clipboard.writeText(url)
+  }
+
   function clearAll() {
     setSelectedSports(new Set())
     setSelectedZones(new Set())
@@ -135,6 +178,7 @@ export default function App() {
       onSelectDate={selectDate}
       onClearDates={() => { setStartDate(null); setEndDate(null) }}
       onClearAll={clearAll}
+      onShareFilters={shareFilters}
       onClose={() => setFilterOpen(false)}
     />
   )
